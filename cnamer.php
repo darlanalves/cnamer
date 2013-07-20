@@ -41,10 +41,10 @@
     );
 
     foreach($default_options as $dkey => $dproperties) {
-        if(count($option_list[$dkey]) > 1) {
+        if(isset($option_list[$dkey]) && count($option_list[$dkey]) > 1) {
             $value = implode($dproperties["join"], $option_list[$dkey]);
         } else {
-            $value = $option_list[$dkey][0] ?: $dproperties['default'];
+            $value = isset($option_list[$dkey][0]) ? $option_list[$dkey][0] : $dproperties['default'];
         }
 
         if($value === "true" || $value === "false")
@@ -53,7 +53,7 @@
         $options[$dkey] = ($value ?: false);
     }
         
-    $url = ($options['protocol']) . '://' . $destination_domain . '/' . ($options['querystring'] ? $options['querystring'] . '/' : false) . ($options['query'] ? $querystring : false);
+    $url = ($options['protocol']) . '://' . $destination_domain . ($options['querystring'] ? '/' . $options['querystring'] : false) . ($options['query'] && !empty($querystring) ? '/' . $querystring : false);
     
     Header('HTTP/1.0 301');
     Header('Location: ' . $url);
