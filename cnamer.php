@@ -1,6 +1,6 @@
 <?php
 
-    $domain = "cnamer.dev";
+    $domain = "cnamer.com";
     $cname = $_SERVER['HTTP_HOST'];
     $destination_domain = str_replace('.' . $domain, "", $cname);
     $querystring = substr($_SERVER['REQUEST_URI'], 1);
