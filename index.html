@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>cnamer &mdash; cname redirect</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="'Pure' DNS redirects using CNames">
+        <meta name="author" content="Samuel Ryan / sam@samryan.co.uk">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+        <style>
+            body{
+                color: #555;
+                font-family: Georgia, 'Open Sans', sans-serif;
+                font-size: 15px;
+                line-height: 22px;
+                margin: 20px 0;
+            }
+            
+            a{
+                color: #2A8FBD;
+                font-weight: bold;
+            }
+            
+            .cnamer{
+                color: #FF0066;
+                text-transform: uppercase;
+            }
+            
+            code{
+                background-color: #EEE;
+                display: block;
+                font-size: 13px;
+                margin: 10px 0;
+                padding: 10px;
+                width: 1000px;
+            }
+            
+            #wrapper {
+                margin: auto;
+                width: 600px;
+            }
+            
+            #options{
+                border: 2px solid #EEE;
+                margin: 10px 0;
+                padding: 10px;
+            }
+            
+            #options p{
+                margin: 0px 0px 4px 0px;
+                padding-bottom: 4px;
+            }
+            
+            #options h4{
+                margin: 0px 0px 4px 0px;
+            }
+            
+            #footer{
+                border-top: 2px solid #EEE;
+                margin-top: 20px;
+                padding: 10px 0;
+            }
+        </style>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-29439846-22', 'cnamer.com');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <header id="header">
+                
+            </header>
+            <section id="overview">
+                <h2 class="cnamer">cnamer</h2>
+                <p>
+                    Redirect a domain using only a CNAME record.
+                </p>
+                <h3>Usage</h3>
+                <p>
+                    Create a CNAME record pointing your domain to cnamer.com,
+                    include your destination domain as a subdomain of cnamer.com.
+                    To redirect <strong>source.com</strong> to <strong>destination.com</strong>
+                    you would use the following:
+                </p>
+                <code>
+                    source.com. CNAME destination.com.cnamer.com.
+                </code>
+                <p>
+                    No forms, no accounts, no databases. A CNAME. That's it. Simple.
+                </p>
+                <h4>Options</h4>
+                <p>
+                    Sometimes you may wish to have a more flexible redirect, 
+                    for example redirecting from http to ftp or including the
+                    query string as part of the destination URL. 
+                    <span class="cnamer">cnamer</span> supports specifying 
+                    options as part of the CNAME, no configuration is required.
+                </p>
+                <p>
+                    Options are optional and can be included in the destination
+                    URL using an "-opts-" modifier that is included after the 
+                    destination, each option should be separated by a dash and
+                    the key value pair should be separated by a period.
+                </p>
+                <p>
+                    To redirect <strong>source.com<em>/query?string=true</em></strong> 
+                    to <strong>destination.com<em>/query?string=true</em></strong>
+                    you would use the following:
+                </p>
+                <code>
+                    source.com. CNAME destination.com-opts-query.true.cnamer.com.
+                </code>
+                <p>
+                    The available options are as follows, the default is in bold.
+                </p>
+                <div id="options">
+                    <h4>protocol</h4>
+                    <p>
+                        Protocol of the destination: ftp, <strong>http</strong>, 
+                        https
+                        <br/>
+                        eg: protocol.ftp
+                    </p>
+                    <h4>query</h4>
+                    <p>
+                        Include the query string of the request in the redirect:
+                        true or <strong>false</strong>
+                        <br/>
+                        eg: query.false
+                    </p>
+                    <h4>querystring</h4>
+                    <p>
+                        A string to append after the domain (but before any
+                        source query string). Alphanumeric only, no dash or 
+                        periods, no limit on the number of times this field can 
+                        be included
+                        <br/>
+                        eg: querystring.login
+                    </p>
+                    <h4>statuscode</h4>
+                    <p>
+                        Status code to be used for the redirect:
+                        <strong>301</strong>, any <a href="http://httpstatus.es">http status code</a>
+                        <br/>
+                        eg: statuscode.301
+                    </p>
+                </div>
+                <!--
+                I wanted it in a table but couldn't get a design I was happy with 
+                <table id="options">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                        <th>Value(s)</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>Protocol</td>
+                        <td>The protocol of the destination URL</td>
+                        <td><strong>http</strong>, https, ftp</td>
+                        <td>protocol.ftp</td>
+                    </tr>
+                    <tr>
+                        <td>Query</td>
+                        <td>If a present query string should be included in the redirect</td>
+                        <td>true or <strong>false</strong></td>
+                        <td>query.true</td>
+                    </tr>
+                    <tr>
+                        <td>Query String</td>
+                        <td>Included after the domain but before the users query (if present), multiple query strings can be set </td>
+                        <td>Any alphanumeric string (no dashes or periods)</td>
+                        <td>querystring.help</td>
+                    </tr>
+                    <tr>
+                        <td>Status Code</td>
+                        <td>The status code for the redirect</td>
+                        <td><strong>301</strong>, full list: <a href="http://httpstatus.es">httpstatus.es</a>
+                        <td>301</td>
+                    </tr>
+                </table>
+                -->
+                <p class="note">
+                    Values are not validated, the provided values are only
+                    recommendations, although for true/false options anything 
+                    not true or false will be ignored will set the option to
+                    false.
+                </p>
+                <h3>Examples</h3>
+                <p>
+                    Redirect source.com to destination.com including any query string
+                </p>
+                <code>
+                    source.com. CNAME destination.com-opts-query.true.cnamer.com.
+                </code>
+                <p>
+                    Redirect source.com to destination.com including any query 
+                    string and prepending the query string with "search/legacy"
+                </p>
+                <code>
+                    source.com. CNAME destination.com-opts-query.true-querystring.search-querystring.legacy.cnamer.com.
+                </code>
+                <p>
+                    Redirect source.com to https://destination.com with a 
+                    302 status code
+                </p>
+                <code>
+                    source.com. CNAME destination.com-opts-statuscode.302-protocol.https.cnamer.com.
+                </code>
+                <h3>Motivation</h3>
+                <p>
+                    I have a wide variety of domains and projects and eventually
+                    some get retired, when this happens I need to redirect the
+                    domain elsewhere without needing to have that domain 
+                    configured on a server somewhere. The ability to have a self
+                    contained redirect as part of the DNS for the domain is both
+                    flexible and easy for my goals.
+                </p>
+                <h3>Final thoughts</h3>
+                <p>
+                    <span class="cnamer">cnamer</span> is intended for retired,
+                    unused, insignificant domains, domains that are not essential 
+                    but should redirect if they can. An axample use case would be 
+                    "help.domain.com" being moved to "support.domain.com". 
+                    Mission critical services should never depend on this site,
+                    deploy your own if that's the case for you.
+                    That said <span class="cnamer">cnamer</span> is hosted on 
+                    its own Linode and should not have any stability problems,
+                    I intend on keeping the site online indefinitely and pledge
+                    to provide <strong>at least</strong> 3 months notice if any
+                    changes will happen, 
+                    <a href="http://samryan.us4.list-manage.com/subscribe?u=63f7de814651215b94b75905e&id=72c4386047">
+                        you can subscribe to any notifications through Mailchimp
+                    </a>.
+                </p>
+                <p>
+                    I'm honestly not sure if this idea is crazy and bad or so
+                    crazy it's good... but I'm sick of having to set up and keep
+                    on top of my retired domain redirects so I built it.
+                </p>
+                <p>
+                    Code is on GitHub: 
+                    <a href="https://github.com/citricsquid/cnamer">citricsquid/cnamer</a>. 
+                    New options, bug fixes, suggestions, ideas, all welcome.
+                    Theme song for development: <em>What You Do To Me &mdash; Blackroc</em>, 
+                    listen @ <a href="http://open.spotify.com/track/5wItF8GfL6t9vdgGosoVd9">spotify</a>, 
+                    <a href="http://www.youtube.com/watch?v=jKgzAMJYmS8">youtube</a>.
+                    <!-- they go so hard damn -->
+                </p>
+            </section>
+            <footer id="footer">
+              cnamer is ran by citricsquid, feedback is encouraged:<br/>
+              <a href="http://samryan.co.uk">samryan.co.uk</a> / 
+              <a href="http://twitter.com/citricsquid">@citricsquid</a> / 
+              <a href="mailto:sam@samryan.co.uk">sam@samryan.co.uk</a> / 
+              <a href="https://www.gittip.com/citricsquid/">citricsquid on Gittip</a>
+            </footer>
+        </div>
+    </body>
+</html>
