@@ -3,8 +3,12 @@
     $domain = "cnamer.com";
     $rdomain = $_SERVER['HTTP_HOST'];
     
-    $dns_record = dns_get_record($rdomain, DNS_CNAME);
-    $cname = $dns_record[0]['target'];
+    if(substr($rdomain, -strlen($domain)) == $domain) {
+        $cname = $rdomain;
+    } else {
+        $dns_record = dns_get_record($rdomain, DNS_CNAME);
+        $cname = $dns_record[0]['target'];
+    }
     
     $destination_domain = str_replace('.' . $domain, "", $cname);
     $querystring = substr($_SERVER['REQUEST_URI'], 1);
