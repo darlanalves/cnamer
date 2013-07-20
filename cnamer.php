@@ -45,7 +45,7 @@
         $options[$dkey] = ($value ?: false);
     }
         
-    $url = ($options['protocol']) . '://' . $destination_domain . '/' . ($options['querystring'] ?: false) . ($options['query'] ? $querystring : false);
+    $url = ($options['protocol']) . '://' . $destination_domain . '/' . ($options['querystring'] ? $options['querystring'] . '/' : false) . ($options['query'] ? $querystring : false);
     
     Header('HTTP/1.0 301');
     Header('Location: ' . $url);
