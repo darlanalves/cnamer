@@ -7,6 +7,10 @@ Documentation @ [cnamer.com](http://cnamer.com).
 To deploy: PHP + wildcard DNS that forwards everything to cnamer.php except for
 the index, that goes to index.html, if you want an index that is.
 
+# future
+
+- A nice idea would be to offer txt records alongside cnames
+
 # license
 
 Copyright (C) 2012 - 2013 Samuel Ryan (citricsquid)
