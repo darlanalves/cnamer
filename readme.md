@@ -1,15 +1,11 @@
 # cnamer
 
-Redirect domains using just a CNAME.
+*Pure* DNS domain redirects using CNAME, TXT or A records
 
-Documentation @ [cnamer.com](http://cnamer.com).
+Documentation @ [cnamer.com](http://cnamer.com)
 
 To deploy: PHP + wildcard DNS that forwards everything to cnamer.php except for
 the index, that goes to index.html, if you want an index that is.
-
-# future
-
-- A nice idea would be to offer txt records alongside cnames
 
 # license
 
