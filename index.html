@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>CNAMER</title>
+    <meta name="description" content="CNAMER, Domain redirects using CNAMEs, no configuration needed!"/>
+    <meta name="author" content="Samuel Ryan / sam@samryan.co.uk">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400|Inconsolata:400' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        body{
+            font-family: Georgia, 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            margin: auto;
+            width: 800px;
+        }
+        #header{
+            background-color: #f6f6f6;
+            height: 100px;
+            padding: 20px 0;
+            width: 100%;
+        }
+        #header h1{
+            color: #FE4365;
+            font-family: 'Inconsolata', Georgia, sans-serif;
+            font-size: 50px;
+            font-weight: bold;
+            margin: 0;
+            text-align: justify;
+        }
+        #header h5{
+            color: #999;
+            font-family: 'Inconsolata', Georgia, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        #content{
+            margin-top: 20px;
+        }
+        #content h1, #content h2, #content h3, #content h4, #content h5, #content h6{
+            font-family: 'Inconsolata', Georgia, sans-serif;
+        }
+        #content p{
+            font-size: 16px;
+            line-height: 22px;
+            width: 600px;
+        }
+        #content code{
+            background-color: #F6F6F6;
+            display: block;
+            font-family: 'Inconsolata';
+            padding: 10px;
+        }
+        #content code .code-sub{
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 80px;
+        }
+        #footer{
+            background-color: #F1BBBA;
+            margin-top: 40px;
+            padding: 20px 0 50px 0;
+            width: 100%;
+        }
+        .cnamer{
+            color: #FE4365;
+            font-family: 'Inconsolata', Georgia, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div class="container">
+            <h1>CNAMER</h1>
+            <h5>713 Domains &rarr; 584,345 redirects</h5>
+        </div>
+    </div>
+    <div id="content" class="container">
+        <p>
+            Redirect a domain using only a DNS record, no forms, no accounts,
+            no database, no charge, just <span class="cnamer">cnamer</span>.
+            A variety of options are available, switch protocols, specify an HTTP 
+            status code, include a custom query string and more. Read about the 
+            maintenance pledge and the service in at the bottom of this page.
+        </p>
+        <p>
+            Redirect <a href="#">google.cnamer.org</a> to google.com:
+        </p>
+        <code>
+            google.cnamer.org. CNAME google.com.cnamer.com.
+        </code>
+        <h1>Usage</h1>
+        <p>
+            Point a domain to the <span class="cnamer">cnamer</span> server using
+            a DNS record and specify options as part of the CNAME or a TXT record,
+            <span class="cnamer">cnamer</span> will perform a DNS lookup and
+            redirect the user to your specified destination. Throughout this
+            documentation "cnamer.org" will be used as a placeholder for
+            your domain, you can visit any cnamer.org example to see the redirect 
+            in action.
+        </p>
+        <h2>CNAME</h2>
+        <p>
+            Specify the destination domain followed by an optional block of 
+            options organised as key.value pairs separated by a dash, set as a
+            subdomain of cnamer.com. A simple subdomain redirect to redirect 
+            google.cnamer.org to google.com:
+        </p>
+        <code>
+            google.cnamer.org. CNAME google.com.cnamer.com.
+        </code>
+        <p>
+            Options can be specified as part of a cname redirect as key.value 
+            pairs that proceed an -opts- flag, after the target
+            domain. For example to redirect wikipedia.cnamer.org to 
+            wikipedia.org with a <a href="#" title="permanent">301</a> status code:
+        </p>
+        <code>
+            wikipedia.cnamer.org. CNAME wikipedia.org-opts-status.301.cnamer.com.
+        </code>
+        <p>
+            Multiple options should be separated by dashes, for example:
+        </p>
+        <code>
+            wikipediassl.cnamer.org. CNAME wikipedia.org-opts-statuscode.301-protocol.https.cnamer.com.
+        </code>
+        <h2>TXT</h2>
+        <p>
+            TXT records are an alternative method of specifying redirect properties,
+            the target and options should be encoded with JSON and set as the value
+            of a TXT record named "redirect-{domain}". For example to redirect
+            github.cnamer.org to https://github.com with a status code of 301:
+        </p>
+        <code>
+            <span class="code-sub">Name</span>  redirect-github.cnamer.org
+            <br/>
+            <span class="code-sub">VALUE</span> {"destination":"https://github.com/", "options": {"statuscode": 301}}
+        </code>
+        <p>
+            To activate the redirect use a CNAME pointing your chosen 
+            domain to txt.cnamer.com, this tells <span class="cnamer">cnamer</span> 
+            to look for properties in the TXT records:
+        </p>
+        <code>
+            github.cnamer.org. CNAME txt.cnamer.com
+        </code>
+        <h2>A Record</h2>
+        <p>
+            A root domain (eg: cnamer.org) cannot be a CNAME, a workaround for
+            this is supported: point the A record for the root domain to the 
+            <span class="cnamer">cnamer</span>server and then creating a CNAME 
+            matching the root domain (using CNAME or TXT options as described above). 
+            For example to redirect cnamer.org to example.org:
+        </p>
+        <code>
+            <span class="code-sub">A</span> cnamer.org. IN A 176.58.124.239
+            <br/>
+            <span class="code-sub">CNAME</span> cnamer.org.cnamer.org. CNAME example.org.cnamer.com
+        </code>
+        <!--
+        <h1>Options</h1>
+        <h2>Protocol</h2>
+        <h2>Status Code</h2>
+        <h2>Query String</h2>
+        <h1>Use Cases</h1>
+        <h1>About</h1>
+        -->
+    </div>
+    <div id="footer">
+        <div class="container">
+            <h1>About</h1>
+            <p>
+                If you are using cnamer it is
+            recommended that you subscribe to 
+            <a href="http://samryan.us4.list-manage.com/subscribe?u=63f7de814651215b94b75905e&id=72c4386047">service updates</a>,
+            I pledge to provide at least <strong>3 months</strong> notice if any 
+            service changes are planned. More information is available at the
+            bottom of this page. full redirect history ([public] or via email?)
+            </p>
+        </div>
+    </div>
+</body>
+</html>
