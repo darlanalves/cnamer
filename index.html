@@ -22,13 +22,14 @@
             padding: 20px 0;
             width: 100%;
         }
-        #header h1{
+        #header h1, #footer h1{
             color: #FE4365;
             font-family: 'Inconsolata', Georgia, sans-serif;
             font-size: 50px;
             font-weight: bold;
             margin: 0;
             text-align: justify;
+            text-transform: uppercase;
         }
         #header h5{
             color: #999;
@@ -37,11 +38,21 @@
             font-weight: bold;
             margin: 10px 0;
         }
+        #intro{
+            background-color: #FFEAF2;
+            height: 100px;
+            padding: 20px 0;
+            width: 100%;
+        }
         #content{
             margin-top: 20px;
         }
         #content h1, #content h2, #content h3, #content h4, #content h5, #content h6{
             font-family: 'Inconsolata', Georgia, sans-serif;
+            text-transform: uppercase;
+        }
+        #content h2{
+            color: #042A4E;
         }
         #content p{
             font-size: 16px;
@@ -60,8 +71,24 @@
             text-transform: uppercase;
             width: 80px;
         }
+        #options{
+            background-color: #F6F6F6;
+            display: block;
+            font-family: 'Inconsolata';
+            padding: 10px;
+        }
+        #options tr{
+            height: 24px;
+            text-align: left;
+        }
+        #options td{
+            padding-right: 30px;
+        }
+        #options th{
+            min-width: 100px;
+        }
         #footer{
-            background-color: #F1BBBA;
+            background-color: #FFEAF2;
             margin-top: 40px;
             padding: 20px 0 50px 0;
             width: 100%;
@@ -80,21 +107,24 @@
             <h5>713 Domains &rarr; 584,345 redirects</h5>
         </div>
     </div>
+    <div id="intro">
+        <div class="container">
+            <p>
+                Redirect a domain using only a DNS record, no forms, no accounts,
+                no database, no charge, just <span class="cnamer">cnamer</span>.
+                A variety of options are available, switch protocols, specify an HTTP 
+                status code, include a custom query string and more.
+            </p>
+            <p>
+                Redirect <a href="#">google.cnamer.org</a> to google.com:
+            </p>
+            <code>
+                google.cnamer.org. CNAME google.com.cnamer.com.
+            </code>
+        </div>
+    </div>
     <div id="content" class="container">
-        <p>
-            Redirect a domain using only a DNS record, no forms, no accounts,
-            no database, no charge, just <span class="cnamer">cnamer</span>.
-            A variety of options are available, switch protocols, specify an HTTP 
-            status code, include a custom query string and more. Read about the 
-            maintenance pledge and the service in at the bottom of this page.
-        </p>
-        <p>
-            Redirect <a href="#">google.cnamer.org</a> to google.com:
-        </p>
-        <code>
-            google.cnamer.org. CNAME google.com.cnamer.com.
-        </code>
-        <h1>Usage</h1>
+        <h1>1. Usage</h1>
         <p>
             Point a domain to the <span class="cnamer">cnamer</span> server using
             a DNS record and specify options as part of the CNAME or a TXT record,
@@ -106,10 +136,8 @@
         </p>
         <h2>CNAME</h2>
         <p>
-            Specify the destination domain followed by an optional block of 
-            options organised as key.value pairs separated by a dash, set as a
-            subdomain of cnamer.com. A simple subdomain redirect to redirect 
-            google.cnamer.org to google.com:
+            Specify the destination domain as a subdomain of cnamer.com. A 
+            simple subdomain redirect to redirect google.cnamer.org to google.com:
         </p>
         <code>
             google.cnamer.org. CNAME google.com.cnamer.com.
@@ -124,7 +152,8 @@
             wikipedia.cnamer.org. CNAME wikipedia.org-opts-status.301.cnamer.com.
         </code>
         <p>
-            Multiple options should be separated by dashes, for example:
+            Multiple options should be separated by dashes, for example a redirect
+            to https://wikipedia.org with a 301 status code:
         </p>
         <code>
             wikipediassl.cnamer.org. CNAME wikipedia.org-opts-statuscode.301-protocol.https.cnamer.com.
@@ -153,23 +182,59 @@
         <p>
             A root domain (eg: cnamer.org) cannot be a CNAME, a workaround for
             this is supported: point the A record for the root domain to the 
-            <span class="cnamer">cnamer</span>server and then creating a CNAME 
+            <span class="cnamer">cnamer</span> server and then creating a CNAME 
             matching the root domain (using CNAME or TXT options as described above). 
-            For example to redirect cnamer.org to example.org:
+            For example to redirect <a href="http://cnamer.org">cnamer.org</a> to 
+            example.org:
         </p>
         <code>
             <span class="code-sub">A</span> cnamer.org. IN A 176.58.124.239
             <br/>
             <span class="code-sub">CNAME</span> cnamer.org.cnamer.org. CNAME example.org.cnamer.com
         </code>
-        <!--
-        <h1>Options</h1>
-        <h2>Protocol</h2>
-        <h2>Status Code</h2>
-        <h2>Query String</h2>
-        <h1>Use Cases</h1>
+        <h1>2. Options</h1>
+        <p>
+            There are a wide variety of use cases for domain redirects, each
+            has unique requirements and <span class="cnamer">cnamer</span> 
+            tries to cater to all.
+        </p>
+        <table id="options">
+            <tr>
+                <th>Option</th>
+                <th>Values</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>protocol</td>
+                <td>https, <strong>http</strong>, ftp</td>
+                <td>Protocol for the target URL</td>
+            </tr>
+            <tr>
+                <td>statuscode</td>
+                <td><strong>301</strong>, <a href="http://httpstatus.es">HTTP Status Code</a></td>
+                <td>HTTP Status Code to be used in the redirect</td>
+            </tr>
+            <tr>
+                <td>query</td>
+                <td>true or <strong>false</strong></td>
+                <td>Append query string (if any) to the target URL</td>
+            </tr>
+            <tr>
+                <td>querystring</td>
+                <td><em>string</em></td>
+                <td>Custom query string (multi values joined in order)</td>
+            </tr>
+        </table>
+        <h3>validation</h3>
+        <p>
+            All values listed above are only suggestions and are not enforced,
+            you are welcome to pass any values and the system will try and use
+            the options, if they are invalid (eg: a non-existent protocol, 
+            invalid status code) your redirect may fail.
+        </p>
+        <h1>3. Examples</h1>
+        <h1>4. Use Cases</h1>
         <h1>About</h1>
-        -->
     </div>
     <div id="footer">
         <div class="container">
