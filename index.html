@@ -6,23 +6,6 @@
     <meta name="description" content="CNAMER, Domain redirects using CNAMEs, no configuration needed!"/>
     <meta name="author" content="Samuel Ryan / sam@samryan.co.uk">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400|Inconsolata:400' rel='stylesheet' type='text/css'>
-    <!-- 
-    I must confess that I am not a designer, I like pretty things and attempt
-    to make pretty things but making pretty things is not my forte. I am
-    affectionately naming this theme "ice cream", because it reminds me of
-    Neapolitan ice cream, although I wasn't inspired by that, I just like pink.
-    
-    Notes: 1) More time was spent designing and writing this index page than
-              developing CNAMER.
-    
-           2) CNAMER is (in theory) something you could build either as some 
-              form of DNS server extension or as an nginx configuration
-              bypassing PHP entirely, however I didn't want to discover a new
-              idea mid-way through development and be constrained by limitations
-              of either my knowledge or the systems.
-    
-           3) The options table design sucks.
-    -->
     <style type="text/css">
         body{
             color: #000;
@@ -189,18 +172,17 @@
                 HTTP status code, include a custom query string and more.
             </p>
             <p>
-                Redirect <a href="http://google.cnamer.org">google.cnamer.org</a> 
-                to google.com:
+                Redirect search.website.com to google.com:
             </p>
             <code>
-                google.cnamer.org. CNAME google.com.cnamer.com.
+                search.website.com. CNAME google.com.cnamer.com.
             </code>
         </div>
     </div>
     <div id="content" class="container">
         <p id="overview">
             Point a domain to the <span class="cnamer">cnamer</span> server using
-            a DNS record and specify options as part of the CNAME or a TXT record,
+            and specify options as part of the CNAME or a TXT record,
             <span class="cnamer">cnamer</span> will perform a DNS lookup and
             redirect the user to your specified destination. Throughout this
             documentation "cnamer.org" will be used as a placeholder for
@@ -314,25 +296,23 @@
             the options, if they are invalid (eg: a non-existent protocol, 
             invalid status code) your redirect may fail.
         </p>
-        <!--
-        <h1>3. Redirect History</h1>
+        <h1>3. Widgets</h1>
+        <h2>Validator</h2>
         <p>
-            Every redirect is logged and increments the counter at the top of
-            this page. You can request an email to be sent to you with a history
-            of your domains redirects, this will only be sent to an email... wait
-            that won't work, what about the email used in the whois? 
+            To validate a redirect configuration (either CNAME or TXT) select
+            the type from the dropdown below and enter your configuration. This
+            widget does not perform any DNS lookups, it just validates the
+            records configuration.
         </p>
-        -->
-        <h1>3. Examples</h1>
-        <!--
-        CNAME + TXT:
-        root domain to root domain
-        subdomain to subdomain
-        subdomain to subdomain with 301
-        subdomain to subdomain with query string
-        
-        
-        -->
+        <h2>Redirect history</h2>
+        <p>
+            A recent history of redirects for a specific <span class="cnamer">CNAMER</span>, 
+            including the inbound and outbound values for each redirect. 
+            Enter the <span class="cnamer">CNAMER</span> target URL 
+            (eg: google.com.cnamer.com) or the original URL (eg: google.cnamer.org)
+            and the last 100 redirects will be loaded.
+        </p>
+        <h1>4. Examples</h1>
         <h2>CNAME</h2>
         <h3>Subdomain -> Domain</h3>
         <code>
@@ -378,22 +358,15 @@
         <code>
             consumed.by. CNAME samryan.co.uk.cnamer.com.
         </code>
-        <!--
-        <h3>Site Aliases</h3>
-        <p>
-            Sites can be known by many names, redirecting alias / typo domains
-            is easy with cnamer...
-        </p>
-        -->
     </div>
     <div id="footer">
         <div class="container">
             <h1>About</h1>
             <p>
                 <span class="cnamer">CNAMER</span> is 
-                <a href="#">open source</a> (on GitHub), code contributions, 
+                <a href="https://github.com/citricsquid/cnamer">open source</a> (on GitHub), code contributions, 
                 general feedback and ideas are greatly appreciated via either 
-                the <a href="#">GitHub issues</a>, 
+                the <a href="https://github.com/citricsquid/cnamer/issues">GitHub issues</a>, 
                 <a href="mailto:sam@samryan.co.uk">email</a> (sam@samryan.co.uk) 
                 or <a href="http://twitter.com/citricsquid">@citricsquid</a> on
                 Twitter.
@@ -420,12 +393,5 @@
             </p>
         </div>
     </div>
-    <!--
-    <div id="sambar">
-        <div class="container">
-            <a href="http://www.rspb.org.uk/advice/helpingbirds/feeding/index.aspx">Feed birds</a>
-        </div>
-    </div>
-    -->
 </body>
 </html>
