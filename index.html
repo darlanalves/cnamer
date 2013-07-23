@@ -6,23 +6,50 @@
     <meta name="description" content="CNAMER, Domain redirects using CNAMEs, no configuration needed!"/>
     <meta name="author" content="Samuel Ryan / sam@samryan.co.uk">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400|Inconsolata:400' rel='stylesheet' type='text/css'>
+    <!-- 
+    I must confess that I am not a designer, I like pretty things and attempt
+    to make pretty things but making pretty things is not my forte. I am
+    affectionately naming this theme "ice cream", because it reminds me of
+    Neapolitan ice cream, although I wasn't inspired by that, I just like pink.
+    
+    Notes: 1) More time was spent designing and writing this index page than
+              developing CNAMER.
+    
+           2) CNAMER is (in theory) something you could build either as some 
+              form of DNS server extension or as an nginx configuration
+              bypassing PHP entirely, however I didn't want to discover a new
+              idea mid-way through development and be constrained by limitations
+              of either my knowledge or the systems.
+    
+           3) The options table design sucks.
+    -->
     <style type="text/css">
         body{
             font-family: Georgia, 'Open Sans', sans-serif;
             margin: 0;
             padding: 0;
         }
+        
         .container{
             margin: auto;
             width: 800px;
         }
+        
+        .cnamer{
+            color: #FE4365;
+            font-family: 'Inconsolata', Georgia, sans-serif;
+            font-size: 18px;
+        }
+        
         #header{
             background-color: #f6f6f6;
-            height: 100px;
+            height: auto;
             padding: 20px 0;
             width: 100%;
         }
-        #header h1, #footer h1{
+        
+        #header h1, 
+        #footer h1{
             color: #FE4365;
             font-family: 'Inconsolata', Georgia, sans-serif;
             font-size: 50px;
@@ -31,79 +58,115 @@
             text-align: justify;
             text-transform: uppercase;
         }
+        
         #header h5{
-            color: #999;
+            color: #A9A9A9;
             font-family: 'Inconsolata', Georgia, sans-serif;
             font-size: 20px;
             font-weight: bold;
             margin: 10px 0;
         }
+        
         #intro{
             background-color: #FFEAF2;
-            height: 100px;
+            height: auto;
             padding: 20px 0;
             width: 100%;
         }
-        #content{
-            margin-top: 20px;
+        
+        #intro code{
+            background-color: #FFF;
         }
-        #content h1, #content h2, #content h3, #content h4, #content h5, #content h6{
+        
+        .container h1, 
+        .container h2, 
+        .container h3, 
+        .container h4, 
+        .container h5, 
+        .container h6{
             font-family: 'Inconsolata', Georgia, sans-serif;
             text-transform: uppercase;
         }
-        #content h2{
+        
+        .container h2{
             color: #042A4E;
         }
-        #content p{
+        
+        .container p{
             font-size: 16px;
             line-height: 22px;
+            margin: 0 0 14px 0;
             width: 600px;
         }
-        #content code{
+        
+        .container code{
             background-color: #F6F6F6;
             display: block;
             font-family: 'Inconsolata';
+            line-height: 22px;
             padding: 10px;
         }
-        #content code .code-sub{
+        
+        .container code .code-sub{
             display: inline-block;
             font-weight: bold;
             text-transform: uppercase;
             width: 80px;
         }
+        
+        #content p{
+            font-size: 16px;
+            line-height: 22px;
+            margin: 20px 0;
+            width: 600px;
+        }
+        
         #options{
             background-color: #F6F6F6;
             display: block;
             font-family: 'Inconsolata';
             padding: 10px;
         }
+        
         #options tr{
             height: 24px;
             text-align: left;
         }
+        
         #options td{
             padding-right: 30px;
         }
+        
         #options th{
             min-width: 100px;
         }
+        
         #footer{
             background-color: #FFEAF2;
             margin-top: 40px;
-            padding: 20px 0 50px 0;
+            padding: 20px 0 20px 0;
             width: 100%;
         }
-        .cnamer{
-            color: #FE4365;
-            font-family: 'Inconsolata', Georgia, sans-serif;
-            font-size: 18px;
+        
+        #footer h1{
+            margin-bottom: 10px;
+        }
+        
+        #sambar{
+            background-color: #CCC;
+            color: #FFF;
+            font-family: 'Open Sans', Georgia, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 0;
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div id="header">
         <div class="container">
-            <h1>CNAMER</h1>
+            <h1>CNAMER</h1> <!-- TODO: make this link -->
             <h5>713 Domains &rarr; 584,345 redirects</h5>
         </div>
     </div>
@@ -112,8 +175,8 @@
             <p>
                 Redirect a domain using only a DNS record, no forms, no accounts,
                 no database, no charge, just <span class="cnamer">cnamer</span>.
-                A variety of options are available, switch protocols, specify an HTTP 
-                status code, include a custom query string and more.
+                A variety of options are available, switch protocols, specify 
+                HTTP status code, include a custom query string and more.
             </p>
             <p>
                 Redirect <a href="#">google.cnamer.org</a> to google.com:
@@ -124,8 +187,7 @@
         </div>
     </div>
     <div id="content" class="container">
-        <h1>1. Usage</h1>
-        <p>
+        <p id="overview">
             Point a domain to the <span class="cnamer">cnamer</span> server using
             a DNS record and specify options as part of the CNAME or a TXT record,
             <span class="cnamer">cnamer</span> will perform a DNS lookup and
@@ -134,6 +196,7 @@
             your domain, you can visit any cnamer.org example to see the redirect 
             in action.
         </p>
+        <h1 id="usage">1. Usage</h1>
         <h2>CNAME</h2>
         <p>
             Specify the destination domain as a subdomain of cnamer.com. A 
@@ -224,6 +287,11 @@
                 <td><em>string</em></td>
                 <td>Custom query string (multi values joined in order)</td>
             </tr>
+            <tr>
+                <td>source</td>
+                <td>true or <strong>false</strong></td>
+                <td>Include source of the request as GET param 'source'</td>
+            </tr>
         </table>
         <h3>validation</h3>
         <p>
@@ -232,22 +300,84 @@
             the options, if they are invalid (eg: a non-existent protocol, 
             invalid status code) your redirect may fail.
         </p>
-        <h1>3. Examples</h1>
-        <h1>4. Use Cases</h1>
-        <h1>About</h1>
+        <!--
+        <h1>3. Redirect History</h1>
+        <p>
+            Every redirect is logged and increments the counter at the top of
+            this page. You can request an email to be sent to you with a history
+            of your domains redirects, this will only be sent to an email... wait
+            that won't work, what about the email used in the whois? 
+        </p>
+        -->
+        <h1>4. Examples</h1>
+        <h1>5. Use Cases</h1>
+        <h3>SaaS migration</h3>
+        <p>
+            Migrating from one platform to another can leave behind dead links 
+            across the internet, moving from help.domain.com hosted by Desk to 
+            support.domain.com hosted by Zendesk with a CNAMER redirect on the 
+            previous domain is an easy way to ensure customers end up in the 
+            right place.
+        </p>
+        <code>
+            support.mcf.li. CNAME support.curse.com-opts-query.true-querystring.forums-querystring.22197033.cnamer.com.
+        </code>
+        <h3>Holding Domains / Retired Domains</h3>
+        <p>
+            Domains being held for future projects or from retired projects
+            don't need to be left abandoned, redirect to a personal site or
+            landing page.
+        </p>
+        <code>
+            consumed.by. CNAME samryan.co.uk.cnamer.com.
+        </code>
+        <!--
+        <h3>Site Aliases</h3>
+        <p>
+            Sites can be known by many names, redirecting alias / typo domains
+            is easy with cnamer...
+        </p>
+        -->
     </div>
     <div id="footer">
         <div class="container">
             <h1>About</h1>
             <p>
-                If you are using cnamer it is
-            recommended that you subscribe to 
-            <a href="http://samryan.us4.list-manage.com/subscribe?u=63f7de814651215b94b75905e&id=72c4386047">service updates</a>,
-            I pledge to provide at least <strong>3 months</strong> notice if any 
-            service changes are planned. More information is available at the
-            bottom of this page. full redirect history ([public] or via email?)
+                <span class="cnamer">CNAMER</span> is 
+                <a href="#">open source</a> (on GitHub), code contributions, 
+                general feedback and ideas are greatly appreciated via either 
+                the <a href="#">GitHub issues</a>, 
+                <a href="mailto:sam@samryan.co.uk">email</a> (sam@samryan.co.uk) 
+                or <a href="http://twitter.com/citricsquid">@citricsquid</a> on
+                Twitter.
+            </p>
+            <h3>pledge</h3>
+            <p>
+                CNAMER is hosted on a cnamer-specific Linode, I pledge to keep it
+                online indefinitely and should any changes need to be made to
+                the services availability I will provide 
+                <strong>at minimum</strong> 3 month's notice. Notice will be
+                provided through this website and the following mailing list, 
+                <a href="http://samryan.us4.list-manage.com/subscribe?u=63f7de814651215b94b75905e&id=72c4386047">CNAMER Mailing List</a>.
+            </p>
+            <p>
+                I understand that allowing a third party service control over the 
+                behaviour of a domain is putting a great deal of trust in that
+                service, with this in mind I promise that CNAMER(.com) will 
+                never be sold or allowed to expire, CNAMER will never direct
+                any domain to anywhere other than the specified destination.
+            </p>
+            <p>
+                xo sam
             </p>
         </div>
     </div>
+    <!--
+    <div id="sambar">
+        <div class="container">
+            <a href="http://www.rspb.org.uk/advice/helpingbirds/feeding/index.aspx">Feed birds</a>
+        </div>
+    </div>
+    -->
 </body>
 </html>
