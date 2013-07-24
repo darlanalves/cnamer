@@ -22,7 +22,7 @@
         .cnamer{
             color: #FE4365;
             font-family: 'Inconsolata', Georgia, sans-serif;
-            font-size: 18px;
+            text-transform: uppercase;
         }
         
         #header{
@@ -200,7 +200,7 @@
             google.cnamer.org. CNAME google.com.cnamer.com.
         </code>
         <p>
-            Options can be specified as part of a cname redirect as key.value 
+            Options can be specified as part of a cname as key.value 
             pairs that proceed an -opts- flag, after the target
             domain. For example to redirect <a href="http://wikipedia.cnamer.org">wikipedia.cnamer.org</a> to 
             wikipedia.org with a <a href="http://httpstatus.es/301" title="permanent">301</a> status code:
@@ -209,8 +209,9 @@
             wikipedia.cnamer.org. CNAME wikipedia.org-opts-status.301.cnamer.com.
         </code>
         <p>
-            Multiple options should be separated by dashes, for example a redirect
-            to https://wikipedia.org with a 301 status code:
+            Multiple options should be separated by dashes, for example 
+            <a href="http://wikipediassl.cnamer.org">wikipediassl.cnamer.org</a> 
+            is a redirect to https://wikipedia.org with a 301 status code:
         </p>
         <code>
             wikipediassl.cnamer.org. CNAME wikipedia.org-opts-statuscode.301-protocol.https.cnamer.com.
@@ -221,7 +222,7 @@
             the target and options should be encoded with JSON and set as the value
             of a TXT record matching your redirect domain. For example to redirect
             <a href="http://github.cnamer.org">github.cnamer.org</a> to 
-            https://github.com with a status code of 301 create a TXT:
+            https://github.com with a status code of 301 create:
         </p>
         <code>
             <span class="code-sub">Name</span>  github.cnamer.org
@@ -274,14 +275,14 @@
                 <td>HTTP Status Code to be used in the redirect</td>
             </tr>
             <tr>
-                <td>query</td>
+                <td>uri</td>
                 <td>true or <strong>false</strong></td>
-                <td>Append query string (if any) to the target URL</td>
+                <td>Append query URI (if any) to the target URL</td>
             </tr>
             <tr>
-                <td>querystring</td>
+                <td>uristring</td>
                 <td><em>string</em></td>
-                <td>Custom query string (multi values joined in order)</td>
+                <td>Custom URI string (multi values joined in order)</td>
             </tr>
             <tr>
                 <td>source</td>
@@ -337,7 +338,7 @@
             <br/>
             <span class="code-sub">VALUE</span> example. TXT "{"destination":"http://google.com/"}"
         </code>
-        <h1>4. Use Cases</h1>
+        <h1>5. Use Cases</h1>
         <h2>SaaS migration</h2>
         <p>
             Migrating from one platform to another can leave behind dead links 
@@ -356,7 +357,7 @@
             site or landing page.
         </p>
         <code>
-            consumed.by. CNAME samryan.co.uk.cnamer.com.
+            <a href="http://consumed.by">consumed.by</a>. CNAME samryan.co.uk.cnamer.com.
         </code>
     </div>
     <div id="footer">
@@ -373,7 +374,7 @@
             </p>
             <h3>pledge</h3>
             <p>
-                CNAMER is hosted on a cnamer-specific Linode, I pledge to keep it
+                CNAMER is hosted on a cnamer specific Linode, I pledge to keep it
                 online indefinitely and should any changes need to be made to
                 the services availability I will provide 
                 <strong>at minimum</strong> 3 month's notice. Notice will be
