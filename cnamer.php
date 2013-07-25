@@ -13,13 +13,11 @@ $request = array(
 );
 
 try {
-    #$cnamer = new Cnamer\Cnamer("opts.appledave.co.uk");
-   $cnamer = new Cnamer\Cnamer($request);
-   $redirect = $cnamer->redirect();
-   #$cnamer = new Cnamer\Cnamer("appledave.co.uk");
+    $cnamer = new Cnamer\Cnamer($request);
+    $redirect = $cnamer->redirect();
+    print_r($redirect);
 } catch (Exception $e) {
     print_r($e);
-    // render helpful error page
 }
 
 // LOG THE STUFF

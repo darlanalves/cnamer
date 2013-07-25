@@ -6,7 +6,19 @@ use Exception;
 class Cnamer{
     
     function __construct($request) {
-        $domain = $request['domain'];
+        $this->request = $request;
+        $this->cache_key = md5($request['domain']);
+        $this->cache_location = __DIR__ . '/../../../cache/';
+        $this->cache_file = $this->cache_location . $this->cache_key . '.cache';
+        $this->cache_time = 10;
+    }
+    
+    function redirect() {
+        $domain = $this->request['domain'];
+        
+        if($cached_data = $this->cache_retrieve($this->cache_time)) {
+            return $cached_data;
+        }
         
         $cname_record = $this->lookup('CNAME', $domain);
         $domain_type = 'sub';
@@ -51,8 +63,8 @@ class Cnamer{
             }
         }
         
-        if(!empty($request['uri']))
-            $domain_config['request_uri'] = $request['uri'];
+        if(!empty($this->request['uri']))
+            $domain_config['request_uri'] = $this->request['uri'];
         
         $configuration = $this->compile_config($domain_config);
         $destination = $this->render_destination($configuration);
@@ -62,27 +74,17 @@ class Cnamer{
             "statuscode" => $configuration['statuscode'],
         );
         
-        $this->redirect = $redirect;
-    }
-    
-    function redirect() {
-        return $this->redirect;
-    }
-    
-    function lookup($type, $domain, $cache = 500) {
-        // look in cache for data
+        $this->cache_store($redirect);
         
-        // retrieve data
+        return $redirect;
+    }
+    
+    function lookup($type, $domain) {
         $lookup = "lookup_{$type}";
         return $this->$lookup($domain);
-        
-        // cache data
-        
-        // return data
     }
     
     function compile_config($config) {
-        // return the compiled configuration
         $options = array(
             "protocol" => array(
                 "value" => "http",
@@ -106,7 +108,6 @@ class Cnamer{
         $c_options = array();
         foreach($options as $option => $properties) {
             if (isset($options[$option]["unsupported_type"]) && $options[$option]["unsupported_type"] == $config['source']) {
-                // do nothing 'cause we're not allowed
                 $c_options[$option] = false;
             } elseif (isset($config["options"][$option]) && is_array($config["options"][$option]) && $properties['join']) {
                 $c_options[$option] = implode("/", $config['options'][$option]);
@@ -139,12 +140,15 @@ class Cnamer{
         return dns_get_record($domain, DNS_TXT);
     }
     
-    function cache_retrieve($domain) {
-        
+    function cache_retrieve($expiry) {
+        if(file_exists($this->cache_file) && filemtime($this->cache_file) >= time() - $expiry)
+            return json_decode(file_get_contents($this->cache_file), true);
+  
+        return false;
     }
     
     function cache_store($data) {
-        
+        file_put_contents($this->cache_file, json_encode($data));
     }
     
 }
