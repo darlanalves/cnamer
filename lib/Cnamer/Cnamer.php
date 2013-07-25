@@ -7,8 +7,8 @@ class Cnamer{
     
     function __construct($request) {
         $this->request = $request;
-        $this->cache_key = md5($request['domain']);
-        $this->cache_location = __DIR__ . '/../../../cache/';
+        $this->cache_key = str_replace(".", "-", $request['domain']);
+        $this->cache_location = CNAMER_DIR . 'cache/';
         $this->cache_file = $this->cache_location . $this->cache_key . '.cache';
         $this->cache_time = 10;
     }
@@ -28,7 +28,7 @@ class Cnamer{
                 throw new \Exception('Record cannot be found');
         }
         
-        if($cname_record['target'] == 'txt.' . cnamer_domain) {
+        if($cname_record['target'] == 'txt.' . CNAMER_DOMAIN) {
             $txt_id = ($domain_type == 'root') ? ('cnamer-root.' . $domain) : 'cnamer-' . $domain;
             if(!$txt_records = $this->lookup('TXT', $txt_id))
                 throw new \Exception('TXT Configuration not found');
@@ -47,7 +47,7 @@ class Cnamer{
             $domain_config["destination"] = $opts[0];
             
             if(isset($opts[1])) {
-                $options = explode("-", str_replace('.' . cnamer_domain, "", $opts[1]));
+                $options = explode("-", str_replace('.' . CNAMER_DOMAIN, "", $opts[1]));
                 foreach($options as $option) {
                     $o = explode(".", $option);
                     $option_values[$o[0]][] = $o[1];
@@ -149,6 +149,10 @@ class Cnamer{
     
     function cache_store($data) {
         file_put_contents($this->cache_file, json_encode($data));
+    }
+    
+    function request_value($value) {
+        return $this->$value;
     }
     
 }

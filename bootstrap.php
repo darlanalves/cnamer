@@ -1,7 +1,8 @@
 <?php
 
-define('cnamer_domain', 'cnamer.com');
-define('cnamer_ip', '192.168.1.1');
+define('CNAMER_DOMAIN', 'cnamer.com');
+define('CNAMER_IP', '192.168.1.1');
+define('CNAMER_DIR', __DIR__ . '/../cnamer/');
 
 spl_autoload_register(function($class_name) {
     $file = __DIR__ . '/lib' . DIRECTORY_SEPARATOR . strtr($class_name, '\\', DIRECTORY_SEPARATOR) . ".php";
