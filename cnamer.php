@@ -15,6 +15,7 @@ try {
     $log->redirect(array_merge($request, array("time" => time())));
 } catch (Exception $e) {
     $log->error(json_encode(array("request" => $request, "error" => $e->getMessage())));
+    die(include("error.php"));
 }
 
 Header("HTTP/1.0 {$redirect['statuscode']}");
