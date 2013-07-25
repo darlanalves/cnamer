@@ -11,6 +11,8 @@ class Cnamer{
         $this->cache_location = CNAMER_DIR . 'cache/';
         $this->cache_file = $this->cache_location . $this->cache_key . '.cache';
         $this->cache_time = 10;
+        
+        $this->log = new Log($request);
     }
     
     function redirect() {
@@ -144,6 +146,9 @@ class Cnamer{
         if(file_exists($this->cache_file) && filemtime($this->cache_file) >= time() - $expiry)
             return json_decode(file_get_contents($this->cache_file), true);
   
+        if(!file_exists($this->cache_file)) 
+            $this->log->increment('domains');
+        
         return false;
     }
     

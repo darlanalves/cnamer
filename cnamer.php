@@ -7,6 +7,11 @@ $request = array(
     "uri" => substr($_SERVER['REQUEST_URI'], 1) != "" ? $_SERVER['REQUEST_URI'] : false,
 );
 
+$request = array(
+    "domain" => "uristring.appledave.co.uk",
+    "uri" => substr($_SERVER['REQUEST_URI'], 1) != "" ? $_SERVER['REQUEST_URI'] : false,
+);
+
 $cnamer = new Cnamer\Cnamer($request);
 $log = new Cnamer\Log($request);
 
