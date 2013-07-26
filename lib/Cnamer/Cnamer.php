@@ -11,8 +11,7 @@ class Cnamer{
         $this->cache_location = CNAMER_DIR . 'cache/';
         $this->cache_file = $this->cache_location . $this->cache_key . '.cache';
         $this->cache_time = 10;
-        
-        $this->log = new Log($request);
+        $this->log_dir = CNAMER_DIR . 'logs/';
     }
     
     function redirect() {
@@ -77,6 +76,8 @@ class Cnamer{
         );
         
         $this->cache_store($redirect);
+        
+        $this->log_request();
         
         return $redirect;
     }
@@ -158,6 +159,11 @@ class Cnamer{
     
     function request_value($value) {
         return $this->$value;
+    }
+    
+    function log_request() {
+        $line = '[' . date("Y-m-d H:i:s") . '] ' . $_SERVER['REMOTE_ADDR'] . ' ' . json_encode(array_merge(array("time" => time()), $request));
+        file_put_contents($this->log_dir . 'request.log', FILE_APPEND);
     }
     
 }

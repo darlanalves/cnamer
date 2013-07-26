@@ -12,11 +12,12 @@ $log = new Cnamer\Log($request);
 
 try {
     $redirect = $cnamer->redirect();
-    $log->redirect(array_merge($request, array("time" => time())));
 } catch (Exception $e) {
-    $log->error(json_encode(array("request" => $request, "error" => $e->getMessage())));
+    error_log(json_encode(array("request" => $request, "error" => $e->getMessage()) . "\n", 3, CNAMER_DIR . 'logs/error.log'));
     die(include("error.php"));
 }
 
-Header("HTTP/1.0 {$redirect['statuscode']}");
-Header("Location: {$redirect['destination']}");
+print_r($redirect);
+
+# Header("HTTP/1.0 {$redirect['statuscode']}");
+# Header("Location: {$redirect['destination']}");
