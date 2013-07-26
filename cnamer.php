@@ -7,17 +7,21 @@ $request = array(
     "uri" => substr($_SERVER['REQUEST_URI'], 1) != "" ? $_SERVER['REQUEST_URI'] : false,
 );
 
+$request = array(
+    "domain" => "uritruedev.appledave.co.uk",
+    "uri" => "",
+);
+
 $cnamer = new Cnamer\Cnamer($request);
-$log = new Cnamer\Log($request);
 
 try {
     $redirect = $cnamer->redirect();
 } catch (Exception $e) {
-    error_log(json_encode(array("request" => $request, "error" => $e->getMessage()) . "\n", 3, CNAMER_DIR . 'logs/error.log'));
+    error_log(json_encode(array("request" => $request, "error" => $e->getMessage())) . "\n", 3, CNAMER_DIR . 'logs/error.log');
     die(include("error.php"));
 }
 
-print_r($redirect);
 
+die('during dev we dont want favicon request');
 # Header("HTTP/1.0 {$redirect['statuscode']}");
 # Header("Location: {$redirect['destination']}");

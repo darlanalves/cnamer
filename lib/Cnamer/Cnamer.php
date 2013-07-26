@@ -18,6 +18,7 @@ class Cnamer{
         $domain = $this->request['domain'];
         
         if($cached_data = $this->cache_retrieve($this->cache_time)) {
+            $this->log_request();
             return $cached_data;
         }
         
@@ -64,7 +65,9 @@ class Cnamer{
             }
         }
         
-        if(!empty($this->request['uri']))
+        $this->log_request();
+        
+        if(isset($this->request['uri']))
             $domain_config['request_uri'] = $this->request['uri'];
         
         $configuration = $this->compile_config($domain_config);
@@ -76,8 +79,6 @@ class Cnamer{
         );
         
         $this->cache_store($redirect);
-        
-        $this->log_request();
         
         return $redirect;
     }
@@ -146,9 +147,6 @@ class Cnamer{
     function cache_retrieve($expiry) {
         if(file_exists($this->cache_file) && filemtime($this->cache_file) >= time() - $expiry)
             return json_decode(file_get_contents($this->cache_file), true);
-  
-        if(!file_exists($this->cache_file)) 
-            $this->log->increment('domains');
         
         return false;
     }
@@ -162,8 +160,9 @@ class Cnamer{
     }
     
     function log_request() {
-        $line = '[' . date("Y-m-d H:i:s") . '] ' . $_SERVER['REMOTE_ADDR'] . ' ' . json_encode(array_merge(array("time" => time()), $request));
-        file_put_contents($this->log_dir . 'request.log', FILE_APPEND);
+        $line = '[' . date("Y-m-d H:i:s") . '] ' . $_SERVER['REMOTE_ADDR'] . ' ' . json_encode(array_merge(array("time" => time()), $this->request)) . "\n";
+        file_put_contents($this->log_dir . 'redirect.log', $line, FILE_APPEND);
+        echo 'logged';
     }
     
 }
