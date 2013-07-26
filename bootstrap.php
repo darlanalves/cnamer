@@ -1,6 +1,7 @@
 <?php
 
 define('CNAMER_DOMAIN', 'cnamer.com');
+define('CNAMER_DEMO', 'cnamer.org');
 define('CNAMER_IP', '192.168.1.1');
 define('CNAMER_DIR', __DIR__ . '/../cnamer/');
 

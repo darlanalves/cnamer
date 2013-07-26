@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>CNAMER</title>
+    <title>CNAMER &mdash; DNS redirects</title>
     <meta name="description" content="CNAMER, Domain redirects using CNAMEs, no configuration needed!"/>
     <meta name="author" content="Samuel Ryan / sam@samryan.co.uk">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400|Inconsolata:400' rel='stylesheet' type='text/css'>
@@ -17,12 +17,6 @@
         .container{
             margin: auto;
             width: 800px;
-        }
-        
-        .cnamer{
-            color: #FE4365;
-            font-family: 'Inconsolata', Georgia, sans-serif;
-            text-transform: uppercase;
         }
         
         #header{
@@ -41,6 +35,16 @@
             margin: 0;
             text-align: justify;
             text-transform: uppercase;
+        }
+        
+        #header h1 a, 
+        #footer h1 a{
+            color: #FE4365;
+        }
+        
+        #header h1 a:hover, 
+        #footer h1 a:hover{
+            color: #FF350D;
         }
         
         #header h5{
@@ -72,8 +76,23 @@
             text-transform: uppercase;
         }
         
-        .container h2{
-            color: #042A4E;
+        .container h1 a, 
+        .container h2 a, 
+        .container h3 a, 
+        .container h4 a, 
+        .container h5 a, 
+        .container h6 a{
+            color: #000;
+        }
+        
+        .container h1 a:hover, 
+        .container h2 a:hover, 
+        .container h3 a:hover, 
+        .container h4 a:hover, 
+        .container h5 a:hover, 
+        .container h6 a:hover{
+            color: #999;
+            text-decoration: none;
         }
         
         .container p{
@@ -114,30 +133,30 @@
             width: 600px;
         }
         
-        #options{
+        #options-table{
             background-color: #F6F6F6;
             display: block;
             font-family: 'Inconsolata';
             padding: 10px;
         }
         
-        #options tr{
+        #options-table tr{
             height: 24px;
             text-align: left;
         }
         
-        #options td{
+        #options-table td{
             padding-right: 30px;
         }
         
-        #options th{
+        #options-table th{
             min-width: 100px;
         }
         
         #footer{
             background-color: #FFEAF2;
             margin-top: 40px;
-            padding: 20px 0 20px 0;
+            padding: 40px 0 140px 0;
             width: 100%;
         }
         
@@ -145,22 +164,21 @@
             margin-bottom: 10px;
         }
         
-        #sambar{
-            background-color: #CCC;
-            color: #FFF;
-            font-family: 'Open Sans', Georgia, sans-serif;
-            font-size: 12px;
+        .squid{
+            color: #F23A65;
             font-weight: bold;
-            padding: 4px 0;
-            width: 100%;
+        }
+
+        .cnamer{
+            color: #FE4365;
         }
     </style>
 </head>
 <body>
     <div id="header">
         <div class="container">
-            <h1>CNAMER</h1> <!-- TODO: make this link -->
-            <h5>713 Domains &rarr; 584,345 redirects</h5>
+            <h1><a href="{CNAMER_DOMAIN}">CNAMER</a></h1>
+            <h5>{DOMAINS_COUNT} Domains &rarr; {REDIRECTS_COUNT} redirects</h5>
         </div>
     </div>
     <div id="intro">
@@ -175,90 +193,90 @@
                 Redirect search.website.com to google.com:
             </p>
             <code>
-                search.website.com. CNAME google.com.cnamer.com.
+                search.website.com. CNAME google.com.{CNAMER_DOMAIN}.
             </code>
         </div>
     </div>
     <div id="content" class="container">
+        <h1 id="usage">1.<a href="#usage">Usage</a></h1>
         <p id="overview">
-            Point a domain to the <span class="cnamer">cnamer</span> server using
+            Point a domain to the <span class="cnamer">cnamer</span> server
             and specify options as part of the CNAME or a TXT record,
             <span class="cnamer">cnamer</span> will perform a DNS lookup and
             redirect the user to your specified destination. Throughout this
-            documentation "cnamer.org" will be used as a placeholder for
-            your domain, you can visit any cnamer.org example to see the redirect 
+            documentation "{CNAMER_DEMO}" will be used as a placeholder for
+            your domain, you can visit any {CNAMER_DEMO} example to see the redirect 
             in action.
         </p>
-        <h1 id="usage">1. Usage</h1>
-        <h2>CNAME</h2>
+        <h2 id="usage:cname"><a href="#usage:cname">CNAME</a></h2>
         <p>
-            Specify the destination domain as a subdomain of cnamer.com. A 
-            simple subdomain redirect of <a href="http://google.cnamer.org">google.cnamer.org</a>
+            Specify the destination domain as a subdomain of {CNAMER_DOMAIN}. A 
+            simple subdomain redirect of <a href="http://google.{CNAMER_DEMO}">google.{CNAMER_DEMO}</a>
             to google.com:
         </p>
         <code>
-            google.cnamer.org. CNAME google.com.cnamer.com.
+            google.{CNAMER_DEMO}. CNAME google.com.{CNAMER_DOMAIN}.
         </code>
         <p>
-            Options can be specified as part of a cname as key.value 
-            pairs that proceed an -opts- flag, after the target
-            domain. For example to redirect <a href="http://wikipedia.cnamer.org">wikipedia.cnamer.org</a> to 
+            Options can be specified as part of a cname as key.value pairs that 
+            proceed an -opts- flag, after the target domain. For example to 
+            redirect <a href="http://wikipedia.{CNAMER_DEMO}">wikipedia.{CNAMER_DEMO}</a> to 
             wikipedia.org with a <a href="http://httpstatus.es/301" title="permanent">301</a> status code:
         </p>
         <code>
-            wikipedia.cnamer.org. CNAME wikipedia.org-opts-status.301.cnamer.com.
+            wikipedia.{CNAMER_DEMO}. CNAME wikipedia.org-opts-status.301.{CNAMER_DOMAIN}.
         </code>
         <p>
             Multiple options should be separated by dashes, for example 
-            <a href="http://wikipediassl.cnamer.org">wikipediassl.cnamer.org</a> 
+            <a href="http://wikipediassl.{CNAMER_DEMO}">wikipediassl.{CNAMER_DEMO}</a> 
             is a redirect to https://wikipedia.org with a 301 status code:
         </p>
         <code>
-            wikipediassl.cnamer.org. CNAME wikipedia.org-opts-statuscode.301-protocol.https.cnamer.com.
+            wikipediassl.{CNAMER_DEMO}. CNAME wikipedia.org-opts-statuscode.301-protocol.https.{CNAMER_DOMAIN}.
         </code>
-        <h2>TXT</h2>
+        <h2 id="usage:txt"><a href="#usage:txt">TXT</a></h2>
         <p>
             TXT records are an alternative method of specifying redirect properties,
             the target and options should be encoded with JSON and set as the value
             of a TXT record matching your redirect domain. For example to redirect
-            <a href="http://github.cnamer.org">github.cnamer.org</a> to 
+            <a href="http://github.{CNAMER_DEMO}">github.{CNAMER_DEMO}</a> to 
             https://github.com with a status code of 301 create:
         </p>
         <code>
-            <span class="code-sub">Name</span>  github.cnamer.org
+            <span class="code-sub">Name</span>  github.{CNAMER_DEMO}
             <br/>
             <span class="code-sub">VALUE</span> {"destination":"https://github.com/", "options": {"statuscode": 301}}
         </code>
         <p>
-            Then create a CNAME pointing your chosen domain to txt.cnamer.com,
+            Then create a CNAME pointing your chosen domain to txt.{CNAMER_DOMAIN},
             this tells <span class="cnamer">cnamer</span> to look for properties 
             in the TXT records:
         </p>
         <code>
-            github.cnamer.org. CNAME txt.cnamer.com
+            github.{CNAMER_DEMO}. CNAME txt.{CNAMER_DOMAIN}.
         </code>
-        <h2>A Record</h2>
+        <h2 id="usage:a"><a href="#usage:a">A Record</a></h2>
         <p>
-            A root domain (eg: cnamer.org) cannot be a CNAME, a workaround for
+            A root domain (eg: {CNAMER_DEMO}) cannot be a CNAME, a workaround for
             this is supported: point the A record for the root domain to the 
-            <span class="cnamer">cnamer</span> server (CNAMER_IP) and then creating a CNAME 
+            <span class="cnamer">cnamer</span> server ({CNAMER_IP}) and then creating a CNAME 
             matching the root domain (using CNAME or TXT options as described above). 
-            For example to redirect <a href="http://cnamer.org">cnamer.org</a> to 
-            cnamer.<strong>com</strong>:
+            For example to redirect <a href="http://{CNAMER_DEMO}">{CNAMER_DEMO}</a> to 
+            {CNAMER_DOMAIN}:
         </p>
         <code>
-            <span class="code-sub">A</span> cnamer.org. IN A 176.58.124.239
+            <span class="code-sub">A</span> {CNAMER_DEMO}. IN A {CNAMER_IP}
             <br/>
-            <span class="code-sub">CNAME</span> cnamer.org.cnamer.org. CNAME example.org.cnamer.com
+            <span class="code-sub">CNAME</span> {CNAMER_DEMO}.{CNAMER_DEMO}. CNAME example.org.{CNAMER_DOMAIN}
         </code>
-        <h1>2. Options</h1>
+        <h1 id="options">2.<a href="#options">Options</a></h1>
         <p>
             There are a wide variety of use cases for domain redirects, each
             has unique requirements and <span class="cnamer">cnamer</span> 
             provides options to allow for the flexibility most situations will
             need.
         </p>
-        <table id="options">
+        <table id="options-table">
             <tr>
                 <th>Option</th>
                 <th>Values</th>
@@ -290,55 +308,15 @@
                 <td>Include source of the request as GET param 'source'</td>
             </tr>
         </table>
-        <h3>validation</h3>
+        <h3 id="options:validation"><a href="#options:validation">validation</a></h3>
         <p>
             All values listed above are only suggestions and are not enforced,
             you are welcome to pass any values and the system will try and use
             the options, if they are invalid (eg: a non-existent protocol, 
             invalid status code) your redirect may fail.
         </p>
-        <h1>3. Widgets</h1>
-        <h2>Validator</h2>
-        <p>
-            To validate a redirect configuration (either CNAME or TXT) select
-            the type from the dropdown below and enter your configuration. This
-            widget does not perform any DNS lookups, it just validates the
-            records configuration.
-        </p>
-        <h2>Redirect history</h2>
-        <p>
-            A recent history of redirects for a specific <span class="cnamer">CNAMER</span>, 
-            including the inbound and outbound values for each redirect. 
-            Enter the <span class="cnamer">CNAMER</span> target URL 
-            (eg: google.com.cnamer.com) or the original URL (eg: google.cnamer.org)
-            and the last 100 redirects will be loaded.
-        </p>
-        <h1>4. Examples</h1>
-        <h2>CNAME</h2>
-        <h3>Subdomain -> Domain</h3>
-        <code>
-            exampleca.cnamer.org. CNAME google.com.cnamer.com.
-        </code>
-        <h3>Subdomain -> Domain with 302</h3>
-        <code>
-            examplecb.cnamer.org. CNAME google.com.cnamer-opts-statuscode.302.com.
-        </code>
-        <h3>Subdomain -> Domain with request query</h3>
-        <code>
-            examplecc.cnamer.org. CNAME google.com.cnamer-opts-query.true.com.
-        </code>
-        <h3>Subdomain -> Domain with custom query</h3>
-        <code>
-            examplecd.cnamer.org. CNAME google.com.cnamer-opts-querystring.redirected.com.
-        </code>
-        <h2>TXT</h2>
-        <h3>Subdomain -> Domain</h3>
-        <code>
-            <span class="code-sub">NAME</span> exampleta.cnamer.org. CNAME txt.cnamer.com.
-            <br/>
-            <span class="code-sub">VALUE</span> example. TXT "{"destination":"http://google.com/"}"
-        </code>
-        <h1>5. Use Cases</h1>
+        <h1 id="examples">3.<a href="#examples">Examples</a></h1>
+        <h1 id="use-cases">4.<a href="#use-cases">Use Cases</a></h1>
         <h2>SaaS migration</h2>
         <p>
             Migrating from one platform to another can leave behind dead links 
@@ -362,17 +340,17 @@
     </div>
     <div id="footer">
         <div class="container">
-            <h1>About</h1>
+            <h1 id="about"><a href="#about">About</a></h1>
             <p>
                 <span class="cnamer">CNAMER</span> is 
-                <a href="https://github.com/citricsquid/cnamer">open source</a> (on GitHub), code contributions, 
+                <a href="https://github.com/citricsquid/cnamer">open source</a>, code contributions, 
                 general feedback and ideas are greatly appreciated via either 
                 the <a href="https://github.com/citricsquid/cnamer/issues">GitHub issues</a>, 
                 <a href="mailto:sam@samryan.co.uk">email</a> (sam@samryan.co.uk) 
                 or <a href="http://twitter.com/citricsquid">@citricsquid</a> on
                 Twitter.
             </p>
-            <h3>pledge</h3>
+            <h3 id="about:pledge"><a href="#about:pledge">pledge</a></h3>
             <p>
                 CNAMER is hosted on a cnamer specific Linode, I pledge to keep it
                 online indefinitely and should any changes need to be made to
@@ -388,9 +366,6 @@
                 <strong>never</strong> be sold, allowed to expire or used for any
                 other purpose than what is outlined here. CNAMER will never direct
                 any domain to anywhere other than the specified destination.
-            </p>
-            <p>
-                <コ:彡
             </p>
         </div>
     </div>
