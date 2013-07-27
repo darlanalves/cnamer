@@ -118,7 +118,7 @@ class Cnamer{
             } elseif (isset($config["options"][$option])) {
                 $c_options[$option] = $config["options"][$option];
             } else {
-                $c_options[$option] = $properties["option"]["value"];
+                $c_options[$option] = $properties["value"];
             }
         }
         
