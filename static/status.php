@@ -9,6 +9,8 @@
 
 require_once __DIR__ . '/../bootstrap.php';
 
+$start_time = microtime(true);
+
 $requests = array(
     "google" => array(
         "domain" => "wikipedia.cnamer.org",
@@ -39,7 +41,7 @@ foreach($requests as $name => $request) {
     }
 }
 
-$response_time = round((((microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]) / 3) * 1000), 3);
+$response_time = round((((microtime(true) - $start_time) / 3) * 1000), 3);
 
 if($successes >= 2) { // 
     $status = 'OK';
