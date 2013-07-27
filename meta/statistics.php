@@ -1,7 +1,7 @@
 <?php
 
-// check if CLI
-// take param to force regeneration
+if(php_sapi_name() != 'cli')
+    die('CLI only');
 
 require_once __DIR__ . '/../bootstrap.php';
 

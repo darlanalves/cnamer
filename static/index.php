@@ -5,7 +5,7 @@ $stats = json_decode(file_get_contents("../data/stats/global.json"), true);
 $time = (time() - $stats['last_update']) * 1000;
 foreach(array("redirect", "domain") as $type) {
     $length = round($time / $stats["{$type}_counter_length"]);
-    $estimate[$type] = $length * $stats["{$type}_counter_increment"];
+    $estimate[$type] = $stats["{$type}_count"] + ($length * $stats["{$type}_counter_increment"]);
 }
 ?>
 <!DOCTYPE html>
