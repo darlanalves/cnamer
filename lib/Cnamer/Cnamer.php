@@ -145,6 +145,9 @@ class Cnamer{
     }
     
     function cache_retrieve($expiry) {
+        if($this->cache_time == 0)
+            return false;
+        
         if(file_exists($this->cache_file) && filemtime($this->cache_file) >= time() - $expiry)
             return json_decode(file_get_contents($this->cache_file), true);
         
@@ -160,9 +163,14 @@ class Cnamer{
     }
     
     function log_request() {
-        $line = '[' . date("Y-m-d H:i:s") . '] ' . $_SERVER['REMOTE_ADDR'] . ' ' . json_encode(array_merge(array("time" => time()), $this->request)) . "\n";
+        $client = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'CLI');
+        
+        $line = '[' . date("Y-m-d H:i:s") . '] ' . $client . ' ' . json_encode(array_merge(array("time" => time()), $this->request)) . "\n";
         file_put_contents($this->log_dir . 'redirect.log', $line, FILE_APPEND);
-        echo 'logged';
+    }
+    
+    function cache_time($cache_time) {
+        $this->cache_time = $cache_time;
     }
     
 }

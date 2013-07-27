@@ -6,9 +6,10 @@
     <meta name="description" content="CNAMER, Domain redirects using CNAMEs, no configuration needed!"/>
     <meta name="author" content="Samuel Ryan / sam@samryan.co.uk">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400|Inconsolata:400' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
+    <?php $stats = json_decode(file_get_contents("../data/stats/global.json"), true); print_r($stats); ?>
     <div id="header">
         <div class="container">
             <h1><a href="http://{CNAMER_DOMAIN}">CNAMER</a></h1>
@@ -161,6 +162,10 @@
             minutes to see if it's working; you can refresh as many times as you
             like until it redirects.
         </p>
+        <h3 id="notes:response-times"><a href="#notes:response-times">Response Times</a></h3>
+        <p>
+            TODO: use http://tools.pingdom.com/ to demo
+        </p>
         <h1 id="examples">4.<a href="#examples">Examples</a></h1>
         <p>
             Redirect <a href="http://support.mcf.li">support.mcf.li</a> to 
@@ -252,6 +257,12 @@
                 <strong>never</strong> be sold, allowed to expire or used for any
                 other purpose than what is outlined here. CNAMER will never direct
                 any domain to anywhere other than the specified destination.
+                <!-- 
+                    I can't imagine any scenario where someone would want to 
+                    take ownership of this site however I want to be explicitly
+                    clear so that there is no ambiguity. Even if I was offered
+                    $1,000,000 I will not sell. No question.
+                -->
             </p>
             <h3 id="about:status"><a href="#about:status">Status</a></h3>
             <p>
@@ -259,11 +270,13 @@
                 <a href="http://status.cnamer">status.cnamer.com</a>, cnamer.com
                 and DNS redirects are both monitored by Pingdom.
             </p>
+            <!--
             <p class="secret">
                 I spent longer designing and redesigning this landing page + 
                 writing documentation and rewriting documentation than I did 
                 writing the actual code.
             </p>
+            -->
         </div>
     </div>
 </body>
