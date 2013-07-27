@@ -6,178 +6,12 @@
     <meta name="description" content="CNAMER, Domain redirects using CNAMEs, no configuration needed!"/>
     <meta name="author" content="Samuel Ryan / sam@samryan.co.uk">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400|Inconsolata:400' rel='stylesheet' type='text/css'>
-    <style type="text/css">
-        body{
-            color: #000;
-            font-family: Georgia, 'Open Sans', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .container{
-            margin: auto;
-            width: 800px;
-        }
-        
-        #header{
-            background-color: #f6f6f6;
-            height: auto;
-            padding: 20px 0;
-            width: 100%;
-        }
-        
-        #header h1, 
-        #footer h1{
-            color: #FE4365;
-            font-family: 'Inconsolata', Georgia, sans-serif;
-            font-size: 50px;
-            font-weight: bold;
-            margin: 0;
-            text-align: justify;
-            text-transform: uppercase;
-        }
-        
-        #header h1 a, 
-        #footer h1 a{
-            color: #FE4365;
-        }
-        
-        #header h1 a:hover, 
-        #footer h1 a:hover{
-            color: #FF350D;
-        }
-        
-        #header h5{
-            color: #A9A9A9;
-            font-family: 'Inconsolata', Georgia, sans-serif;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        #intro{
-            background-color: #FFEAF2;
-            height: auto;
-            padding: 20px 0;
-            width: 100%;
-        }
-        
-        #intro code{
-            background-color: #FFF;
-        }
-        
-        .container h1, 
-        .container h2, 
-        .container h3, 
-        .container h4, 
-        .container h5, 
-        .container h6{
-            font-family: 'Inconsolata', Georgia, sans-serif;
-            text-transform: uppercase;
-        }
-        
-        .container h1 a, 
-        .container h2 a, 
-        .container h3 a, 
-        .container h4 a, 
-        .container h5 a, 
-        .container h6 a{
-            color: #000;
-        }
-        
-        .container h1 a:hover, 
-        .container h2 a:hover, 
-        .container h3 a:hover, 
-        .container h4 a:hover, 
-        .container h5 a:hover, 
-        .container h6 a:hover{
-            color: #999;
-            text-decoration: none;
-        }
-        
-        .container p{
-            font-size: 16px;
-            line-height: 22px;
-            margin: 0 0 14px 0;
-            width: 600px;
-        }
-        
-        .container a{
-            color: #025D8C;
-            text-decoration: none;
-        }
-        
-        .container a:hover{
-            text-decoration: underline;
-        }
-        
-        .container code{
-            background-color: #F6F6F6;
-            display: block;
-            font-family: 'Inconsolata';
-            line-height: 22px;
-            padding: 10px;
-        }
-        
-        .container code .code-sub{
-            display: inline-block;
-            font-weight: bold;
-            text-transform: uppercase;
-            width: 80px;
-        }
-        
-        #content p{
-            font-size: 16px;
-            line-height: 22px;
-            margin: 20px 0;
-            width: 600px;
-        }
-        
-        #options-table{
-            background-color: #F6F6F6;
-            display: block;
-            font-family: 'Inconsolata';
-            padding: 10px;
-        }
-        
-        #options-table tr{
-            height: 24px;
-            text-align: left;
-        }
-        
-        #options-table td{
-            padding-right: 30px;
-        }
-        
-        #options-table th{
-            min-width: 100px;
-        }
-        
-        #footer{
-            background-color: #FFEAF2;
-            margin-top: 40px;
-            padding: 40px 0 140px 0;
-            width: 100%;
-        }
-        
-        #footer h1{
-            margin-bottom: 10px;
-        }
-        
-        .squid{
-            color: #F23A65;
-            font-weight: bold;
-        }
-
-        .cnamer{
-            color: #FE4365;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div id="header">
         <div class="container">
-            <h1><a href="{CNAMER_DOMAIN}">CNAMER</a></h1>
+            <h1><a href="http://{CNAMER_DOMAIN}">CNAMER</a></h1>
             <h5>{DOMAINS_COUNT} Domains &rarr; {REDIRECTS_COUNT} redirects</h5>
         </div>
     </div>
@@ -238,12 +72,18 @@
         <p>
             TXT records are an alternative method of specifying redirect properties,
             the target and options should be encoded with JSON and set as the value
-            of a TXT record matching your redirect domain. For example to redirect
+            of a TXT record matching your redirect domain prepended with "cnamer-".
+            If your redirect is on "sub.domain.com" your TXT record name should be
+            "cnamer-sub.domain.com". If you're using a root domain then the TXT
+            record name should be "cnamer-root.domain.com".
+        </p>
+        <p>
+            For example to redirect
             <a href="http://github.{CNAMER_DEMO}">github.{CNAMER_DEMO}</a> to 
-            https://github.com with a status code of 301 create:
+            https://github.com with a status code of 301 create a TXT record:
         </p>
         <code>
-            <span class="code-sub">Name</span>  github.{CNAMER_DEMO}
+            <span class="code-sub">Name</span>  cnamer-github.{CNAMER_DEMO}
             <br/>
             <span class="code-sub">VALUE</span> {"destination":"https://github.com/", "options": {"statuscode": 301}}
         </code>
@@ -302,11 +142,6 @@
                 <td><em>string</em></td>
                 <td>Custom URI string (multi values joined in order)</td>
             </tr>
-            <tr>
-                <td>source</td>
-                <td>true or <strong>false</strong></td>
-                <td>Include source of the request as GET param 'source'</td>
-            </tr>
         </table>
         <h3 id="options:validation"><a href="#options:validation">validation</a></h3>
         <p>
@@ -315,8 +150,59 @@
             the options, if they are invalid (eg: a non-existent protocol, 
             invalid status code) your redirect may fail.
         </p>
-        <h1 id="examples">3.<a href="#examples">Examples</a></h1>
-        <h1 id="use-cases">4.<a href="#use-cases">Use Cases</a></h1>
+        <h1 id="notes">3.<a href="#notes">Notes</a></h1>
+        <h3 id="notes:caching"><a href="#notes:caching">caching</a></h3>
+        <p>
+            If a DNS lookup is successful (responds with a CNAME record) then
+            that response is cached for 10 minutes, this is to reduce server load
+            and to reduce the time it takes for a redirect to take place.
+            The lack of caching on failed requests means that if you are setting 
+            up a CNAMER redirect for the first time you do not have to wait 10
+            minutes to see if it's working; you can refresh as many times as you
+            like until it redirects.
+        </p>
+        <h1 id="examples">4.<a href="#examples">Examples</a></h1>
+        <p>
+            Redirect <a href="http://support.mcf.li">support.mcf.li</a> to 
+            support.curse.com/forums/22197033 with a 301 status code, using a 
+            CNAME to configure the redirect:
+        </p>
+        <code>
+            support.mcf.li. CNAME support.curse.com-opts-query.true-querystring.forums-querystring.22197033.cnamer.com.
+        </code>
+        <p>
+            Example <a href="examples/support-desk-to-support-zendesk.png">DNS configuration screenshot</a> (Linode DNS Manager). 
+        </p>
+        <hr/>
+        <p>
+            Redirect <a href="http://citricsquid.com">citricsquid.com</a> to 
+            samryan.co.uk, configured with a TXT record:
+        </p>
+        <code>
+            <span class="code-sub">A</span> 176.58.124.239
+            <br/>
+            <span class="code-sub">CNAME</span> cnamer.citricsquid.com. CNAME txt.cnamer.com.
+            <br/>
+            <span class="code-sub">TXT</span> cnamer.citricsquid.com. TXT {"destination":"http://samryan.co.uk/"}
+        </code>
+        <p>
+            Example <a href="examples/citricsquid.com-to-samryan.co.uk.png">DNS configuration screenshot</a> (Linode DNS Manager). 
+        </p>
+        <hr/>
+        <p>
+            Redirect <a href="http://search.mcf.li/search+terms">search.mcf.li/search+terms</a> 
+            to google.com/search?q=site:minecraftforum.net+{search+terms} configured
+            with a TXT record:
+        </p>
+        <code>
+            <span class="code-sub">CNAME</span> search.mcf.li. CNAME txt.cnamer.com.
+            <br/>
+            <span class="code-sub">TXT</span> search.mcf.li. TXT {"destination":"https://google.com/search?q=site:minecraftforum.net+", "options":{"uri": true}}
+        </code>
+        <p>
+            Example <a href="examples/search-mcf-li-to-google-com.png">DNS configuration screenshot</a> (Linode DNS Manager). 
+        </p>
+        <h1 id="use-cases">5.<a href="#use-cases">Use Cases</a></h1>
         <h2>SaaS migration</h2>
         <p>
             Migrating from one platform to another can leave behind dead links 
@@ -352,7 +238,7 @@
             </p>
             <h3 id="about:pledge"><a href="#about:pledge">pledge</a></h3>
             <p>
-                CNAMER is hosted on a cnamer specific Linode, I pledge to keep it
+                CNAMER.com is hosted on a cnamer specific Linode, I pledge to keep it
                 online indefinitely and should any changes need to be made to
                 the services availability I will provide 
                 <strong>at minimum</strong> 3 month's notice. Notice will be
@@ -366,6 +252,17 @@
                 <strong>never</strong> be sold, allowed to expire or used for any
                 other purpose than what is outlined here. CNAMER will never direct
                 any domain to anywhere other than the specified destination.
+            </p>
+            <h3 id="about:status"><a href="#about:status">Status</a></h3>
+            <p>
+                CNAMER.com uptime and incident history is available at 
+                <a href="http://status.cnamer">status.cnamer.com</a>, cnamer.com
+                and DNS redirects are both monitored by Pingdom.
+            </p>
+            <p class="secret">
+                I spent longer designing and redesigning this landing page + 
+                writing documentation and rewriting documentation than I did 
+                writing the actual code.
             </p>
         </div>
     </div>
