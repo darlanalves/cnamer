@@ -56,7 +56,7 @@ foreach(array("redirect", "domain") as $type) {
                 Redirect a domain using only a DNS record, no forms, no accounts,
                 no database, no charge, just <span class="cnamer">cnamer</span>.
                 A variety of options are available, switch protocols, specify 
-                HTTP status code, include a custom query string and more.
+                HTTP status code, include a custom uri string and more.
             </p>
             <p>
                 Redirect search.website.com to google.com:
@@ -170,7 +170,7 @@ foreach(array("redirect", "domain") as $type) {
             <tr>
                 <td>uri</td>
                 <td>true or <strong>false</strong></td>
-                <td>Append query URI (if any) to the target URL</td>
+                <td>Append URI (if any) to the target URL</td>
             </tr>
             <tr>
                 <td>uristring</td>
@@ -207,7 +207,7 @@ foreach(array("redirect", "domain") as $type) {
             CNAME to configure the redirect:
         </p>
         <code>
-            support.mcf.li. CNAME support.curse.com-opts-query.true-querystring.forums-querystring.22197033.cnamer.com.
+            support.mcf.li. CNAME support.curse.com-opts-uristring.forums-uristring.22197033.cnamer.com.
         </code>
         <p>
             Example <a href="examples/support-desk-to-support-zendesk.png">DNS configuration screenshot</a> (Linode DNS Manager). 
@@ -251,7 +251,7 @@ foreach(array("redirect", "domain") as $type) {
             right place.
         </p>
         <code>
-            <a href="http://support.mcf.li">support.mcf.li</a>. CNAME support.curse.com-opts-query.true-querystring.forums-querystring.22197033.cnamer.com.
+            <a href="http://support.mcf.li">support.mcf.li</a>. CNAME support.curse.com-opts-uristring.forums-uristring.22197033.cnamer.com.
         </code>
         <h2>Holding Domains / Retired Domains</h2>
         <p>
