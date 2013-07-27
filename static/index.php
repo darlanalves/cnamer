@@ -38,7 +38,7 @@ foreach(array("redirect", "domain") as $type) {
     <div id="header">
         <div class="container">
             <h1><a href="http://<?php echo CNAMER_DOMAIN; ?>">CNAMER</a></h1>
-            <h5><span id="domain_count"><?php echo $estimate['domain'] ?></span> Domains &rarr; <span id="redirect_count"><?php echo $estimate['redirect']; ?></span> redirects</h5>
+            <h5><span id="domain_count"><?php echo $estimate['domain'] ?></span> Domains &rarr; <span id="redirect_count"><?php echo $estimate['redirect']; ?></span> redirects <span title="This is estimated, updated every 5 mins with accurate figures">*</span></h5>
         </div>
     </div>
     <div id="intro">
@@ -189,12 +189,12 @@ foreach(array("redirect", "domain") as $type) {
         </p>
         <h3 id="notes:response-times"><a href="#notes:response-times">Response Times</a></h3>
         <p>
-            TODO: use http://tools.pingdom.com/ to demo
+            TODO
         </p>
         <h1 id="examples">4.<a href="#examples">Examples</a></h1>
         <p>
             Redirect <a href="http://support.mcf.li">support.mcf.li</a> to 
-            support.curse.com/forums/22197033 with a 301 status code, using a 
+            support.curse.com/forums/22197033, using a 
             CNAME to configure the redirect:
         </p>
         <code>

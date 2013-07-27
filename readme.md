@@ -4,6 +4,8 @@
 
 Documentation @ [cnamer.com](http://cnamer.com)
 
+Status page @ [status.cnamer.com](http://status.cnamer.com)
+
 * Requires PHP 5.4. 
 * Point all requests of *.{cnamer-domain} to cnamer/cnamer.php
 * Point all requests of {cnamer-domain} to static/index.php. 
