@@ -24,12 +24,14 @@ class Cnamer{
         
         $cname_record = $this->lookup('CNAME', $domain);
         $domain_type = 'sub';
+
         if(!$cname_record || $cname_record['type'] != "CNAME") {
+            
             $domain_type = 'root';
             if(!$cname_record = $this->lookup('CNAME', "cnamer.{$domain}"))
                 throw new \Exception('Record cannot be found ' . "cnamer.{$domain}");
         }
-        
+
         if($cname_record['target'] == 'txt.' . CNAMER_DOMAIN) {
             $txt_id = ($domain_type == 'root') ? ('cnamer-root.' . $domain) : 'cnamer-' . $domain;
             if(!$txt_records = $this->lookup('TXT', $txt_id))
@@ -44,6 +46,8 @@ class Cnamer{
         } else {
             $target = $cname_record['target'];
             $opts = explode("-opts-", $target);
+            
+            $opts[0] = str_replace('.' . CNAMER_DOMAIN, "", $opts[0]);
             
             $domain_config['source'] = 'cname';
             $domain_config["destination"] = $opts[0];
