@@ -27,13 +27,13 @@ class Cnamer{
         if(!$cname_record || $cname_record['type'] != "CNAME") {
             $domain_type = 'root';
             if(!$cname_record = $this->lookup('CNAME', "cnamer.{$domain}"))
-                throw new \Exception('Record cannot be found');
+                throw new \Exception('Record cannot be found ' . "cnamer.{$domain}");
         }
         
         if($cname_record['target'] == 'txt.' . CNAMER_DOMAIN) {
             $txt_id = ($domain_type == 'root') ? ('cnamer-root.' . $domain) : 'cnamer-' . $domain;
             if(!$txt_records = $this->lookup('TXT', $txt_id))
-                throw new \Exception('TXT Configuration not found');
+                throw new \Exception('TXT Configuration not found ' . "cnamer-root.{$domain}");
             
             $domain_config = json_decode($txt_records[0]['txt'], true);
             
