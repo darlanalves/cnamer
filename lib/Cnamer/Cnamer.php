@@ -10,7 +10,7 @@ class Cnamer{
         $this->cache_key = str_replace(".", "-", $request['domain']);
         $this->cache_location = CNAMER_DIR . 'cache/';
         $this->cache_file = $this->cache_location . $this->cache_key . '.cache';
-        $this->cache_time = 10;
+        $this->cache_time = 600;
         $this->log_dir = CNAMER_DIR . 'logs/';
     }
     
