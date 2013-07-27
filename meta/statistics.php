@@ -1,5 +1,8 @@
 <?php
 
+// check if CLI
+// take param to force regeneration
+
 require_once __DIR__ . '/../bootstrap.php';
 
 $time = time();
@@ -41,25 +44,29 @@ if(file_exists(CNAMER_DIR . 'stats/global.json')) {
     );
 }
 
+// lol what am i doing
+
+$stats['redirect_count_period'] = $redirect_count;
 $stats['redirect_count'] = $stats['redirect_count'] + $redirect_count;
+$stats['domain_count_period'] = $domain_count - $stats['domain_count_period'];
 $stats['domain_count'] = $domain_count;
+$stats['period_length'] = time() - $stats['last_update'];
 $stats['last_update'] = time();
 
+foreach(array("domain", "redirect") as $type) {
+    $period = "{$type}_count_period";
+    $length = "{$type}_counter_length";
+    $increment = "{$type}_counter_increment";
+    
+    if($stats[$period] > 0) {
+        if(($rcp = $stats['period_length'] / $stats[$period] * 1000) < 500) {
+            $stats[$length] = 500;
+            $stats[$increment] = round(500 / $rcp);
+        } else {
+            $stats[$length] = round($rcp);
+            $stats[$increment] = 1;
+        }
+    }
+}
+
 file_put_contents(CNAMER_DIR . 'stats/global.json', json_encode($stats, JSON_PRETTY_PRINT));
-
-$template_values = array(
-    "{CNAMER_DOMAIN}" => CNAMER_DOMAIN,
-    "{CNAMER_DEMO}" => CNAMER_DEMO,
-    "{CNAMER_IP}" => CNAMER_IP,
-    "{REDIRECTS_COUNT}" => $stats['redirect_count'],
-    "{DOMAINS_COUNT}" => $stats['domain_count'],
-    "{LAST_UPDATE}" => $stats['last_update'],
-);
-
-$search = array_keys($template_values);
-$replace = array_values($template_values);
-
-$index = file_get_contents(__DIR__ . '/../templates/index.html');
-$rendered_template = str_replace($search, $replace, $index);
-
-file_put_contents(__DIR__ . '/../index.html', $rendered_template);
