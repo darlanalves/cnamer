@@ -4,12 +4,15 @@
 
 Documentation @ [cnamer.com](http://cnamer.com)
 
-To deploy: PHP + wildcard DNS that forwards everything to cnamer.php except for
-the index, that goes to index.html, if you want an index that is.
-
-# notes
-
-- redirect https to http in nginx to prevent ssl problems
+* Requires PHP 5.4. 
+* Point all requests of *.{cnamer-domain} to cnamer/cnamer.php
+* Point all requests of {cnamer-domain} to static/index.php. 
+* data folder should be writable by PHP, this includes all the logs, stats and 
+    cache data.
+* Put your configuration stuff in bootstrap.php
+* Set meta/statistics.php to run every however long (5 mins is good) to generate
+    stats on the domains + redirects performed.
+* The static folder isn't static but static is a pretty word
 
 # license
 

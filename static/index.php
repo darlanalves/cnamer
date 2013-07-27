@@ -1,3 +1,13 @@
+<?php 
+require '../bootstrap.php';
+$stats = json_decode(file_get_contents("../data/stats/global.json"), true); 
+
+$time = (time() - $stats['last_update']) * 1000;
+foreach(array("redirect", "domain") as $type) {
+    $length = round($time / $stats["{$type}_counter_length"]);
+    $estimate[$type] = $length * $stats["{$type}_counter_increment"];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +19,26 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <?php $stats = json_decode(file_get_contents("../data/stats/global.json"), true); print_r($stats); ?>
+    <script type="text/javascript">
+        function update_counter(element_id, increment_by){
+            var counter = document.getElementById(element_id);
+            var curnum = parseInt(counter.innerHTML, 10);
+            curnum = curnum + increment_by;
+            counter.innerHTML = curnum;
+        }
+
+        setInterval(function() {
+            update_counter('redirect_count', <?php echo $stats['redirect_counter_increment']; ?>);
+        }, <?php echo $stats['redirect_counter_length']; ?>);
+
+        setInterval(function() {
+            update_counter('domain_count', <?php echo $stats['domain_counter_increment']; ?>);
+        }, <?php echo $stats['domain_counter_length']; ?>);
+    </script>
     <div id="header">
         <div class="container">
-            <h1><a href="http://{CNAMER_DOMAIN}">CNAMER</a></h1>
-            <h5>{DOMAINS_COUNT} Domains &rarr; {REDIRECTS_COUNT} redirects</h5>
+            <h1><a href="http://<?php echo CNAMER_DOMAIN; ?>">CNAMER</a></h1>
+            <h5><span id="domain_count"><?php echo $estimate['domain'] ?></span> Domains &rarr; <span id="redirect_count"><?php echo $estimate['redirect']; ?></span> redirects</h5>
         </div>
     </div>
     <div id="intro">
@@ -28,7 +53,7 @@
                 Redirect search.website.com to google.com:
             </p>
             <code>
-                search.website.com. CNAME google.com.{CNAMER_DOMAIN}.
+                search.website.com. CNAME google.com.<?php echo CNAMER_DOMAIN; ?>.
             </code>
         </div>
     </div>
@@ -39,35 +64,35 @@
             and specify options as part of the CNAME or a TXT record,
             <span class="cnamer">cnamer</span> will perform a DNS lookup and
             redirect the user to your specified destination. Throughout this
-            documentation "{CNAMER_DEMO}" will be used as a placeholder for
-            your domain, you can visit any {CNAMER_DEMO} example to see the redirect 
+            documentation "<?php echo CNAMER_DEMO; ?>" will be used as a placeholder for
+            your domain, you can visit any <?php echo CNAMER_DEMO; ?> example to see the redirect 
             in action.
         </p>
         <h2 id="usage:cname"><a href="#usage:cname">CNAME</a></h2>
         <p>
-            Specify the destination domain as a subdomain of {CNAMER_DOMAIN}. A 
-            simple subdomain redirect of <a href="http://google.{CNAMER_DEMO}">google.{CNAMER_DEMO}</a>
+            Specify the destination domain as a subdomain of <?php echo CNAMER_DOMAIN; ?>. A 
+            simple subdomain redirect of <a href="http://google.<?php echo CNAMER_DEMO; ?>">google.<?php echo CNAMER_DEMO; ?></a>
             to google.com:
         </p>
         <code>
-            google.{CNAMER_DEMO}. CNAME google.com.{CNAMER_DOMAIN}.
+            google.<?php echo CNAMER_DEMO; ?>. CNAME google.com.<?php echo CNAMER_DOMAIN; ?>.
         </code>
         <p>
             Options can be specified as part of a cname as key.value pairs that 
             proceed an -opts- flag, after the target domain. For example to 
-            redirect <a href="http://wikipedia.{CNAMER_DEMO}">wikipedia.{CNAMER_DEMO}</a> to 
+            redirect <a href="http://wikipedia.<?php echo CNAMER_DEMO; ?>">wikipedia.<?php echo CNAMER_DEMO; ?></a> to 
             wikipedia.org with a <a href="http://httpstatus.es/301" title="permanent">301</a> status code:
         </p>
         <code>
-            wikipedia.{CNAMER_DEMO}. CNAME wikipedia.org-opts-status.301.{CNAMER_DOMAIN}.
+            wikipedia.<?php echo CNAMER_DEMO; ?>. CNAME wikipedia.org-opts-statuscode.301.<?php echo CNAMER_DOMAIN; ?>.
         </code>
         <p>
             Multiple options should be separated by dashes, for example 
-            <a href="http://wikipediassl.{CNAMER_DEMO}">wikipediassl.{CNAMER_DEMO}</a> 
+            <a href="http://wikipediassl.<?php echo CNAMER_DEMO; ?>">wikipediassl.<?php echo CNAMER_DEMO; ?></a> 
             is a redirect to https://wikipedia.org with a 301 status code:
         </p>
         <code>
-            wikipediassl.{CNAMER_DEMO}. CNAME wikipedia.org-opts-statuscode.301-protocol.https.{CNAMER_DOMAIN}.
+            wikipediassl.<?php echo CNAMER_DEMO; ?>. CNAME wikipedia.org-opts-statuscode.301-protocol.https.<?php echo CNAMER_DOMAIN; ?>.
         </code>
         <h2 id="usage:txt"><a href="#usage:txt">TXT</a></h2>
         <p>
@@ -80,35 +105,35 @@
         </p>
         <p>
             For example to redirect
-            <a href="http://github.{CNAMER_DEMO}">github.{CNAMER_DEMO}</a> to 
+            <a href="http://github.<?php echo CNAMER_DEMO; ?>">github.<?php echo CNAMER_DEMO; ?></a> to 
             https://github.com with a status code of 301 create a TXT record:
         </p>
         <code>
-            <span class="code-sub">Name</span>  cnamer-github.{CNAMER_DEMO}
+            <span class="code-sub">Name</span>  cnamer-github.<?php echo CNAMER_DEMO; ?>
             <br/>
             <span class="code-sub">VALUE</span> {"destination":"https://github.com/", "options": {"statuscode": 301}}
         </code>
         <p>
-            Then create a CNAME pointing your chosen domain to txt.{CNAMER_DOMAIN},
+            Then create a CNAME pointing your chosen domain to txt.<?php echo CNAMER_DOMAIN; ?>,
             this tells <span class="cnamer">cnamer</span> to look for properties 
             in the TXT records:
         </p>
         <code>
-            github.{CNAMER_DEMO}. CNAME txt.{CNAMER_DOMAIN}.
+            github.<?php echo CNAMER_DEMO; ?>. CNAME txt.<?php echo CNAMER_DOMAIN; ?>.
         </code>
         <h2 id="usage:a"><a href="#usage:a">A Record</a></h2>
         <p>
-            A root domain (eg: {CNAMER_DEMO}) cannot be a CNAME, a workaround for
+            A root domain (eg: <?php echo CNAMER_DEMO; ?>) cannot be a CNAME, a workaround for
             this is supported: point the A record for the root domain to the 
-            <span class="cnamer">cnamer</span> server ({CNAMER_IP}) and then creating a CNAME 
+            <span class="cnamer">cnamer</span> server (<?php echo CNAMER_IP; ?>) and then creating a CNAME 
             matching the root domain (using CNAME or TXT options as described above). 
-            For example to redirect <a href="http://{CNAMER_DEMO}">{CNAMER_DEMO}</a> to 
-            {CNAMER_DOMAIN}:
+            For example to redirect <a href="http://<?php echo CNAMER_DEMO; ?>"><?php echo CNAMER_DEMO; ?></a> to 
+            <?php echo CNAMER_DOMAIN; ?>:
         </p>
         <code>
-            <span class="code-sub">A</span> {CNAMER_DEMO}. IN A {CNAMER_IP}
+            <span class="code-sub">A</span> <?php echo CNAMER_DEMO; ?>. IN A <?php echo CNAMER_IP; ?>
             <br/>
-            <span class="code-sub">CNAME</span> {CNAMER_DEMO}.{CNAMER_DEMO}. CNAME example.org.{CNAMER_DOMAIN}
+            <span class="code-sub">CNAME</span> <?php echo CNAMER_DEMO; ?>.<?php echo CNAMER_DEMO; ?>. CNAME example.org.<?php echo CNAMER_DOMAIN; ?>
         </code>
         <h1 id="options">2.<a href="#options">Options</a></h1>
         <p>
