@@ -27,11 +27,8 @@ class Cnamer {
 
     function redirect() {
         if($this->cache_use && $cache_data = $this->cache_retrieve($this->cache_time)) {
-            $this->log_request();
-            return $cache_data;
-        }
-        
-        if ($this->parse_domain($this->request['domain'])['type'] == 'domain') {
+            $this->domain_config = $cache_data;
+        }elseif ($this->parse_domain($this->request['domain'])['type'] == 'domain') {
             $cname_record = $this->dns_lookup('CNAME', $this->request['domain']);
             $domain_type = 'sub';
 
@@ -57,8 +54,12 @@ class Cnamer {
                 throw new \Exception('Error setting the domain config ' . "{$this->request['domain']}");
         }
         
+        if($this->cache_use) {
+            $this->cache_store($this->domain_config);
+        }
+        
         if (isset($this->request['uri'])) {
-            $this->domain_config['request_uri'] = $this->request['uri'];
+            $this->domain_config['request_uri'] = substr($this->request['uri'], 1);
         }
 
         $configuration = $this->compile_config($this->domain_config);
@@ -70,10 +71,6 @@ class Cnamer {
         );
 
         $this->log_request();
-        
-        if($this->cache_use) {
-            $this->cache_store($redirect);
-        }
         
         return $redirect;
     }
