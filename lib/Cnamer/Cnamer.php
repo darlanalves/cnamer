@@ -61,7 +61,7 @@ class Cnamer {
         if (isset($this->request['uri'])) {
             $this->domain_config['request_uri'] = substr($this->request['uri'], 1);
         }
-
+        
         $configuration = $this->compile_config($this->domain_config);
         $destination = $this->render_destination($configuration);
 

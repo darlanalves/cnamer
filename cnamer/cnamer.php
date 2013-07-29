@@ -13,7 +13,12 @@ try {
     $redirect = $cnamer->redirect();
 } catch (Exception $e) {
     error_log(json_encode(array("request" => $request, "error" => $e->getMessage())) . "\n", 3, CNAMER_DIR . 'logs/error.log');
-    Header('Location: http://' . CNAMER_DOMAIN . '/error.php?request=' . $request['domain'] . '&uri=' . $request['uri']);
+    if(CNAMER_DOMAIN == "cnamer.dev") {
+        print_r($e->getMessage());
+    } else {
+        Header('Location: http://' . CNAMER_DOMAIN . '/error.php?request=' . $request['domain'] . '&uri=' . $request['uri']);
+    }
 }
+
 Header("HTTP/1.0 {$redirect['statuscode']}");
 Header("Location: {$redirect['destination']}");
