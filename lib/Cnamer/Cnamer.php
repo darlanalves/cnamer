@@ -15,6 +15,8 @@ class Cnamer {
 
         $this->cache_time = 600;
         $this->cache_use = true;
+        
+        $this->log_use = true;
 
         if ($options) {
             foreach ($options as $option => $value) {
@@ -180,6 +182,9 @@ class Cnamer {
     }
     
     function log_request() {
+        if(!$this->log_use)
+            return false;
+        
         $client = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'CLI');
 
         $line = '[' . date("Y-m-d H:i:s") . '] ' . $client . ' ' . json_encode(array_merge(array("time" => time()), $this->request)) . "\n";
