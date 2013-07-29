@@ -7,6 +7,8 @@
  * if not... uh oh, report that the system is down!
  */
 
+// select some random previously redirectd domains?
+
 require_once __DIR__ . '/../bootstrap.php';
 
 $start_time = microtime(true);
