@@ -139,7 +139,7 @@ foreach(array("redirect", "domain") as $type) {
             and then create a CNAME matching the root domain (using CNAME or TXT 
             options as described above). For example to redirect 
             <a href="http://<?php echo CNAMER_DEMO; ?>"><?php echo CNAMER_DEMO; ?></a> to 
-            <?php echo CNAMER_DOMAIN; ?>:
+            example.org:
         </p>
         <code>
             <span class="code-sub">A</span> <?php echo CNAMER_DEMO; ?>. IN A <?php echo CNAMER_IP; ?>
@@ -313,7 +313,7 @@ foreach(array("redirect", "domain") as $type) {
             </p>
             <h3 id="about:status"><a href="#about:status">Status</a></h3>
             <p>
-                CNAMER.com uptime and incident history is available at 
+                CNAMER.com response time and incident history is available at 
                 <a href="http://status.cnamer">status.cnamer.com</a>, cnamer.com
                 and DNS redirects are both monitored by Pingdom.
             </p>
