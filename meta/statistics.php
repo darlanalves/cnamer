@@ -32,7 +32,11 @@ foreach($lines as $line) {
 $new_domain_count = count($redirect_domains);
 
 $cache_files = new FilesystemIterator(CNAMER_DIR . 'cache/', FilesystemIterator::SKIP_DOTS);
-$domain_count = iterator_count($cache_files);
+foreach($cache_files as $name => $properties) {
+    $contents = file_get_contents($properties->getPathname());
+    if(!empty($contents) && $contents != "false" && substr($properties->getFilename(), 0, 7) != "cnamer-")
+        $domain_count++;
+}
 
 if(file_exists(CNAMER_DIR . 'stats/global.json')) {
     $stats = json_decode(file_get_contents(CNAMER_DIR . 'stats/global.json'), true);
