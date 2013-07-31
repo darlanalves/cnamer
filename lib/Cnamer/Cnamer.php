@@ -56,7 +56,7 @@ class Cnamer {
             }
             
             if($cname_record['target'] == 'txt.' . CNAMER_DOMAIN) {
-                $txt_id = ($domain_type == 'root') ? ('cnamer-root.' . $request['domain']) : 'cnamer-' . $request['domain'];
+                $txt_id = ($domain_type == 'root') ? ('cnamer-' . $request['domain'] . '.' . $request['domain']) : 'cnamer-' . $request['domain'];
                 if(!$txt_record = $this->dns_lookup('TXT', $txt_id)) {
                     throw new \Exception('TXT Configuration not found');
                 }
