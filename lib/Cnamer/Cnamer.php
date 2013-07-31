@@ -49,7 +49,7 @@ class Cnamer {
             if(!$cname_record || $cname_record['type'] != 'CNAME') {
                 $domain_type = 'root';
                 if(!$cname_record = $this->dns_lookup('CNAME', 'cnamer.' . $request['domain'])) {
-                    if(!$cname_record = $this->dns_lookup('CNAME', 'cnamer-root.' . $request['domain'])) {
+                    if(!$cname_record = $this->dns_lookup('CNAME', $request['domain'] . '.' . $request['domain'])) {
                         throw new \Exception('Record not be found');
                     }
                 }
