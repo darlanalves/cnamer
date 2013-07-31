@@ -19,10 +19,10 @@ $requests = array(
         "domain" => "support.mcf.li",
         "uri" => "whatever",
     ),
-#    "search" => array( // cname with uri true
-#        "domain" => "search.mcf.li",
-#        "uri" => "something+here",
-#    ),
+    "search" => array( // cname with uri true
+        "domain" => "search.mcf.li",
+        "uri" => "something+here",
+    ),
     "cnamer" => array( // cnamer url
         "domain" => "google.com.cnamer.com",
         "uri" => "",
@@ -41,12 +41,10 @@ $requests = array(
     ),
 );
 
-
-
 foreach($requests as $name => $request) {
-    $cnamer = new Cnamer\Cnamer($request, array("cache_use" => false));
+    $cnamer = new Cnamer\Cnamer(array("cache_use" => false));
     try {
-        $redirect = $cnamer->redirect();
+        $redirect = $cnamer->redirect($request);
         $results[$name] = json_encode($redirect);
     } catch (Exception $e) {
         $results[$name] = $e->getMessage();
