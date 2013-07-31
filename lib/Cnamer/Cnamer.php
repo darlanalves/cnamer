@@ -95,7 +95,7 @@ class Cnamer {
         $cache_location = CNAMER_DIR . 'cache/';
         $cache_file = $cache_location . $cache_key . ".{$type}.cache";
         
-        if($this->cache_use == true && file_exists($cache_file) && filemtime($cache_file) >= time() - $this->cache_time) {
+        if($this->cache_use && file_exists($cache_file) && filemtime($cache_file) >= time() - $this->cache_time) {
             return json_decode(file_get_contents($cache_file), true);
         }
         
