@@ -97,7 +97,7 @@ foreach(array("redirect", "domain") as $type) {
         </code>
         <p>
             Multiple options should be separated by dashes, for example 
-            <a href="http://youtube.<?php echo CNAMER_DEMO; ?>">youtubessl.<?php echo CNAMER_DEMO; ?></a> 
+            <a href="http://youtube.<?php echo CNAMER_DEMO; ?>">youtube.<?php echo CNAMER_DEMO; ?></a> 
             is a redirect to https://youtube.org with a 301 status code:
         </p>
         <code>
