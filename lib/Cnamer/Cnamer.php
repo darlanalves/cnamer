@@ -18,7 +18,7 @@ class Cnamer {
                 "join" => false,
             ),
             "statuscode" => array(
-                "value" => "301",
+                "value" => 301,
                 "join" => false,
             ),
             "uri" => array(
@@ -77,8 +77,8 @@ class Cnamer {
         
         $options = $this->render_options($options);
         
-        if(isset($request['uri'])) 
-            $options['request_uri'] = $request['uri'];
+        if(isset($request['uri']))
+            $options['request_uri'] = (substr($request['uri'], 0, 1) == '/') ? substr($request['uri'], 1) : $request['uri'];
         
         $destination = $this->compile_destination($options);
         
@@ -163,11 +163,16 @@ class Cnamer {
         if(filter_var($destination, FILTER_VALIDATE_URL) === false)
             $destination = $options['protocol'] . '://' . $destination;
         
+        $slash = '/';
+        
+        if(in_array(substr($destination, -1), array("+", "=")))
+            $slash = '';    
+        
         if($options['uristring'])
             $destination .= '/' . $options['uristring'];
         
         if($options['uri'] && !empty($options['request_uri']))
-            $destination .= '/' . $options['request_uri'];
+            $destination .= $slash . $options['request_uri'];
         
         return $destination;
     }
