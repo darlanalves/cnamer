@@ -33,9 +33,9 @@ $successes = 0;
 $status = 'DOWN';
 
 foreach($requests as $name => $request) {
-    $cnamer = new Cnamer\Cnamer($request, array("use_cache" => false, "log_use" => false));
+    $cnamer = new Cnamer\Cnamer(array("use_cache" => false, "log_use" => false));
     try {
-        $redirect = $cnamer->redirect(); // TODO: Don't load from cache!
+        $redirect = $cnamer->redirect($request); // TODO: Don't load from cache!
         $successes++;
     } catch (Exception $e) {
         $failures++;
