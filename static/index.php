@@ -97,11 +97,11 @@ foreach(array("redirect", "domain") as $type) {
         </code>
         <p>
             Multiple options should be separated by dashes, for example 
-            <a href="http://wikipediassl.<?php echo CNAMER_DEMO; ?>">wikipediassl.<?php echo CNAMER_DEMO; ?></a> 
-            is a redirect to https://wikipedia.org with a 301 status code:
+            <a href="http://youtube.<?php echo CNAMER_DEMO; ?>">youtubessl.<?php echo CNAMER_DEMO; ?></a> 
+            is a redirect to https://youtube.org with a 301 status code:
         </p>
         <code>
-            wikipediassl.<?php echo CNAMER_DEMO; ?>. CNAME wikipedia.org-opts-statuscode.301-protocol.https.<?php echo CNAMER_DOMAIN; ?>.
+            youtubessl.<?php echo CNAMER_DEMO; ?>. CNAME youtube.com-opts-statuscode.301-protocol.https.<?php echo CNAMER_DOMAIN; ?>.
         </code>
         <h2 id="usage:txt"><a href="#usage:txt">TXT</a></h2>
         <p>
@@ -110,7 +110,8 @@ foreach(array("redirect", "domain") as $type) {
             of a TXT record matching your redirect domain prepended with "cnamer-".
             If your redirect is on "sub.domain.com" your TXT record name should be
             "cnamer-sub.domain.com". If you're using a root domain then the TXT
-            record name should be "cnamer-root.domain.com".
+            record name should be "cnamer-root.domain.com". The only mandatory
+            property is "destination", the rest are optional.
         </p>
         <p>
             For example to redirect
@@ -120,7 +121,7 @@ foreach(array("redirect", "domain") as $type) {
         <code>
             <span class="code-sub">Name</span>  cnamer-github.<?php echo CNAMER_DEMO; ?>
             <br/>
-            <span class="code-sub">VALUE</span> {"destination":"https://github.com/", "options": {"statuscode": 301}}
+            <span class="code-sub">VALUE</span> {"destination":"https://github.com/", "statuscode": 301}
         </code>
         <p>
             Then create a CNAME pointing your chosen domain to txt.<?php echo CNAMER_DOMAIN; ?>,
@@ -134,9 +135,10 @@ foreach(array("redirect", "domain") as $type) {
         <p>
             A root domain (eg: <?php echo CNAMER_DEMO; ?>) cannot be a CNAME, a workaround for
             this is supported: point the A record for the root domain to the 
-            <span class="cnamer">cnamer</span> server (<?php echo CNAMER_IP; ?>) and then creating a CNAME 
-            matching the root domain (using CNAME or TXT options as described above). 
-            For example to redirect <a href="http://<?php echo CNAMER_DEMO; ?>"><?php echo CNAMER_DEMO; ?></a> to 
+            <span class="cnamer">cnamer</span> server (<?php echo CNAMER_IP; ?>) 
+            and then create a CNAME matching the root domain (using CNAME or TXT 
+            options as described above). For example to redirect 
+            <a href="http://<?php echo CNAMER_DEMO; ?>"><?php echo CNAMER_DEMO; ?></a> to 
             <?php echo CNAMER_DOMAIN; ?>:
         </p>
         <code>
@@ -242,6 +244,15 @@ foreach(array("redirect", "domain") as $type) {
             Example <a href="examples/search-mcf-li-to-google-com.png">DNS configuration screenshot</a> (Linode DNS Manager). 
         </p>
         <h1 id="use-cases">5.<a href="#use-cases">Use Cases</a></h1>
+        <h2>Domain hack .coms</h2>
+        <p>
+            Redirecting a full length alternative to a domain hack to the proper
+            domain, eg: httpstatuses.com -> httpstatus.es:
+        </p>
+        <code>
+            <a href="http://httpstatuses.com">httpstatuses.com</a>. CNAME httpstatuses.com-opts-uri.true.cnamer.com.
+        </code>
+        <h2>Short URLS</h2>
         <h2>SaaS migration</h2>
         <p>
             Migrating from one platform to another can leave behind dead links 
@@ -290,7 +301,9 @@ foreach(array("redirect", "domain") as $type) {
                 service, with this in mind I promise that CNAMER(.com) will 
                 <strong>never</strong> be sold, allowed to expire or used for any
                 other purpose than what is outlined here. CNAMER will never direct
-                any domain to anywhere other than the specified destination.
+                a domain to anywhere other than the specified destination, it 
+                will always be transparent and there will never be any 
+                interstitial pages / advertisements.
                 <!-- 
                     I can't imagine any scenario where someone would want to 
                     take ownership of this site however I want to be explicitly

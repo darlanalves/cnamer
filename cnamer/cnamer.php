@@ -17,7 +17,9 @@ try {
     
     Header("HTTP/1.0 302");
     Header("Location: {$destination}");
+    exit();
 }
 
 Header("HTTP/1.0 302");
 Header("Location: {$redirect['destination']}");
+exit();
