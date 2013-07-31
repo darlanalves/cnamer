@@ -33,9 +33,9 @@ $successes = 0;
 $status = 'DOWN';
 
 foreach($requests as $name => $request) {
-    $cnamer = new Cnamer\Cnamer(array("cache_use" => false, "log_use" => false));
+    $cnamer = new Cnamer\Cnamer(array('cache_use' => false, 'log_use' => false));
     try {
-        $redirect = $cnamer->redirect($request); // TODO: Don't load from cache!
+        $redirect = $cnamer->redirect($request);
         $successes++;
     } catch (Exception $e) {
         $failures++;
@@ -44,7 +44,7 @@ foreach($requests as $name => $request) {
 
 $response_time = round((((microtime(true) - $start_time) / 3) * 1000), 3);
 
-if($successes >= 2) { // 
+if($successes >= 2) {
     $status = 'OK';
 }
 

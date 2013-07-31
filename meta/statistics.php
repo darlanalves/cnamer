@@ -25,7 +25,7 @@ foreach($lines as $line) {
     preg_match('%\[(.*?)\] (.*?) (.*?)$%', $line, $values);
     list($entry, $datetime, $request_ip, $json) = $values;
     $data = json_decode($json, true);
-    $redirect_domains[$data["domain"]] = true;
+    $redirect_domains[$data["request"]["domain"]] = true;
     $redirect_count++;
 }
 

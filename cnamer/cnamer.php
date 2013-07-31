@@ -11,6 +11,8 @@ $cnamer = new Cnamer\Cnamer();
 
 try {
     $redirect = $cnamer->redirect($request);
+    $line = '[' . date("Y-m-d H:i:s") . '] ' . $_SERVER['REMOTE_ADDR'] . ' ' . json_encode(array_merge(array("time" => time(), "request" => $request, "redirect" => $request))) . "\n";
+    error_log($line, 3, CNAMER_DIR . 'logs/redirect.log');
 } catch (Exception $e) {
     error_log(json_encode(array("request" => $request, "error" => $e->getMessage())) . "\n", 3, CNAMER_DIR . 'logs/error.log');
     $destination = 'http://'. CNAMER_DOMAIN . '/error.php?request=' . $request['domain'] . '&uri=' . $request['uri'];
