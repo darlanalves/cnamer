@@ -166,8 +166,8 @@ class Cnamer {
         $slash = '/';
         
         if(in_array(substr($destination, -1), array("+", "=")))
-            $slash = '';    
-        
+            $slash = '';
+
         if($options['uristring'])
             $destination .= '/' . $options['uristring'];
         
