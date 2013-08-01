@@ -200,7 +200,11 @@ foreach(array("redirect", "domain") as $type) {
         </p>
         <h3 id="notes:response-times"><a href="#notes:response-times">Response Times</a></h3>
         <p>
-            TODO
+            Using the <a href="http://tools.pingdom.com">Pingdom Website Speed Test</a> 
+            tool <span class="cnamer">CNAMER</span> appears to take roughly 250MS 
+            to perform a complete redirect. Google recommends that a site should 
+            load in under 2 seconds, a <span class="cnamer">CNAMER</span> redirect
+            is 12.5% of that.
         </p>
         <h1 id="examples">4.<a href="#examples">Examples</a></h1>
         <p>
