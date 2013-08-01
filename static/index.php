@@ -228,7 +228,7 @@ foreach(array("redirect", "domain") as $type) {
             <br/>
             <span class="code-sub">CNAME</span> cnamer.citricsquid.com. CNAME txt.cnamer.com.
             <br/>
-            <span class="code-sub">TXT</span> cnamer.citricsquid.com. TXT {"destination":"http://samryan.co.uk/"}
+            <span class="code-sub">TXT</span> cnamer-citricsquid.com. TXT {"destination":"http://samryan.co.uk/"}
         </code>
         <p>
             Example <a href="examples/citricsquid.com-to-samryan.co.uk.png">DNS configuration screenshot</a> (Linode DNS Manager). 
@@ -317,8 +317,8 @@ foreach(array("redirect", "domain") as $type) {
             </p>
             <h3 id="about:status"><a href="#about:status">Status</a></h3>
             <p>
-                CNAMER.com response time and incident history is available at 
-                <a href="http://status.cnamer">status.cnamer.com</a>, cnamer.com
+                CNAMER.com response time and incident history is available via 
+                <a href="http://stats.pingdom.com/lv98509ohuvm/908448">stats.pingdom.com</a>, cnamer.com
                 and DNS redirects are both monitored by Pingdom.
             </p>
             <!--
