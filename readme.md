@@ -4,17 +4,14 @@
 
 Documentation @ [cnamer.com](http://cnamer.com)
 
-Status page @ [status.cnamer.com](http://status.cnamer.com)
-
 * Requires PHP 5.4. 
 * Point all requests of *.{cnamer-domain} to cnamer/cnamer.php
 * Point all requests of {cnamer-domain} to static/index.php. 
-* data folder should be writable by PHP, this includes all the logs, stats and 
+* data/ should be writable by PHP, this includes all the logs, stats and 
     cache data.
 * Put your configuration stuff in bootstrap.php
 * Set meta/statistics.php to run every however long (5 mins is good) to generate
     stats on the domains + redirects performed.
-* The static folder isn't static but static is a pretty word
 
 # license
 
