@@ -144,7 +144,7 @@ foreach(array("redirect", "domain") as $type) {
         <code>
             <span class="code-sub">A</span> <?php echo CNAMER_DEMO; ?>. IN A <?php echo CNAMER_IP; ?>
             <br/>
-            <span class="code-sub">CNAME</span> <?php echo CNAMER_DEMO; ?>.<?php echo CNAMER_DEMO; ?>. CNAME example.org.<?php echo CNAMER_DOMAIN; ?>
+            <span class="code-sub">CNAME</span> cnamer-<?php echo CNAMER_DEMO; ?>. CNAME example.org.<?php echo CNAMER_DOMAIN; ?>
         </code>
         <h1 id="options">2.<a href="#options">Options</a></h1>
         <p>
