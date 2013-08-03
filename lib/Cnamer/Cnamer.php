@@ -4,8 +4,14 @@ namespace Cnamer;
 use Exception;
 
 class Cnamer {
+    
+    private $cache_time;
+    private $cache_use;
+    private $log_dir;
+    private $log_use;
+    private $options;
 
-    function __construct($config = false) {
+    public function __construct($config = false) {
         $this->cache_time = 600;
         $this->cache_use = true;
         
@@ -41,7 +47,7 @@ class Cnamer {
         }
     }
 
-    function redirect($request) {
+    public function redirect($request) {
         if(substr($request['domain'], -strlen(CNAMER_DOMAIN)) != CNAMER_DOMAIN) {
             $cname_record = $this->dns_lookup('CNAME', $request['domain']);
             $domain_type = 'sub';
@@ -90,7 +96,7 @@ class Cnamer {
         return $redirect;
     }
     
-    function dns_lookup($type, $domain) {
+    private function dns_lookup($type, $domain) {
         $cache_key = str_replace(".", "-", $domain);
         $cache_location = CNAMER_DIR . 'cache/';
         $cache_file = $cache_location . $cache_key . ".{$type}.cache";
@@ -109,19 +115,19 @@ class Cnamer {
         return $data;
     }
     
-    function lookup_CNAME($domain) {
+    private function lookup_CNAME($domain) {
         if(!$cname = dns_get_record($domain, DNS_CNAME))
             return false;
         
         return $cname[0];
     }
     
-    function lookup_TXT($domain) {
+    private function lookup_TXT($domain) {
         $record = dns_get_record($domain, DNS_TXT);
         return $record ? $record[0] : false;
     }
     
-    function parse_opts($domain) {
+    private function parse_opts($domain) {
         $domain = substr($domain, 0, -strlen(CNAMER_DOMAIN) - 1);
         if(strpos($domain, '-opts-')) {
             $dn = explode('-opts-', $domain);
@@ -141,7 +147,7 @@ class Cnamer {
         return $cname_options;
     }
     
-    function render_options($options) {
+    private function render_options($options) {
         foreach($this->options as $option => $properties) {
             if(isset($options[$option])) {
                 if(isset($properties['join']) && count($options[$option]) > 1) {
@@ -157,7 +163,7 @@ class Cnamer {
         return $values;
     }
     
-    function compile_destination($options) {
+    private function compile_destination($options) {
         $destination = $options['destination'];
         
         if(filter_var($destination, FILTER_VALIDATE_URL) === false)
