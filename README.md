@@ -2,6 +2,11 @@
 
 Redirect domains with DNS records.
 
+## Requirements
+
+* PHP 5.4
+
+
 # license
 
 Copyright (C) 2013 - 2014 Samuel Ryan (citricsquid)

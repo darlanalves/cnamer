@@ -7,7 +7,7 @@ class Request {
 	/**
 	 * The CNAMER domain
 	 * 
-	 * @var domain
+	 * @var string
 	 * @access protected
 	 */
 	protected $domain;
