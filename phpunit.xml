@@ -7,7 +7,7 @@
 
     <testsuites>
         <testsuite name="Cnamer">
-            <directory>tests/cnamer</directory>
+            <directory>tests/Cnamer</directory>
         </testsuite>
     </testsuites>
 </phpunit>
