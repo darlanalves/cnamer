@@ -61,13 +61,7 @@ class CacheTest extends PHPUnit_Framework_TestCase {
 	
 	public function tearDown()
 	{
-		foreach (glob($this->directory . '/*') as $file)
-		{
-			if (is_file($file))
-			{
-				unlink($file);
-			}
-		}
+		array_map('unlink', glob($this->directory . '/*'));
 	}
 	
 }
