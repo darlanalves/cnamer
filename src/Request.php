@@ -13,25 +13,6 @@ use Exception;
 class Request {
 	
 	/**
-	 * The CNAMER domain
-	 * 
-	 * @var string
-	 * @access protected
-	 */
-	protected $domain;
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param string $domain	The CNAMER domain
-	 * @access public
-	 */
-	public function __construct($domain)
-	{
-		$this->domain = $domain;
-	}
-	
-	/**
 	 * Parses the URL
 	 * 
 	 * @param string $url	The URL to parse
@@ -48,27 +29,23 @@ class Request {
 			throw new Exception('URL cannot be parsed');
 		}
 		
-		$url_components = parse_url($url);
-		$url_components['cnamer'] = $this->isHostCnamer($url_components['host']);
+		$components = parse_url($url);
 		
-		return $url_components;
+		$this->scheme	= $components['scheme'];
+		$this->host		= $components['host'];
+		$this->path		= isset($components['path']) ? $components['path'] : null;
+		$this->query	= isset($components['query']) ? $components['query'] : null;
+		$this->fragment = isset($components['fragment']) ? $components['fragment'] : null;
 	}
 	
-	/**
-	 * Checks if the domain is .$domain
-	 * 
-	 * @param string $host
-	 * @access public
-	 * @return boolean
-	 */
-	public function isHostCnamer($host)
+	public function getScheme()
 	{
-		if (substr($host, -strlen($this->domain), strlen($this->domain)) == $this->domain)
-		{
-			return true;
-		}
-		
-		return false;
+		return $this->scheme;
+	}
+	
+	public function getHost()
+	{
+		return $this->host;
 	}
 	
 }
