@@ -2,12 +2,6 @@
 
 use Exception;
 
-/**
- * Url
- * 
- * @package	Cnamer
- */
-
 class Url {
 	
 	/**
