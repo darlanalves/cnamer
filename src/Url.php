@@ -136,4 +136,22 @@ class Url {
 		return $this->fragment;
 	}
 	
+	public function buildRequestString($optional_only = false)
+	{
+		$string = '';
+		
+		if ($optional_only == false)
+		{
+			$string .= $this->getScheme();
+			$string .= '://';
+			$string .= $this->getHost();
+		}
+		
+		$string .= $this->getTruePath();
+		$string .= $this->getQuery() ? '?' . $this->getQuery() : '';
+		$string .= $this->getFragment() ? '#' . $this->getFragment() : '';
+		
+		return $string;
+	}
+	
 }

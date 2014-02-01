@@ -2,6 +2,14 @@
 
 class UrlTest extends PHPUnit_Framework_TestCase {
 	
+	/**
+	 * @expectedException Exception
+	 */
+	public function testInvalidUrlThrowsException()
+	{
+		$url = new Cnamer\Url('www.google.com');
+	}
+	
 	public function testValidUrlParses()
 	{
 		$url = new Cnamer\Url('https://www.google.com/search?q=CNAMER#fragment');
@@ -23,12 +31,11 @@ class UrlTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($url->getFragment());
 	}
 	
-	/**
-	 * @expectedException Exception
-	 */
-	public function testInvalidUrlThrowsException()
+	public function testBuildRequestString()
 	{
-		$url = new Cnamer\Url('www.google.com');
+		$url = new Cnamer\Url('http://example.com/hello-world?key=val#fragment');
+		$this->assertEquals('/hello-world?key=val#fragment', $url->buildRequestString(true));
+		$this->assertEquals('http://example.com/hello-world?key=val#fragment', $url->buildRequestString());
 	}
 	
 }
