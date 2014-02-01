@@ -4,11 +4,23 @@ use Exception;
 
 class Redirect {
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param \Cnamer\Url $url
+	 */
 	public function __construct(Url $url)
 	{
 		$this->url = $url;
 	}
 	
+	/**
+	 * Compile the redirect URL
+	 * 
+	 * @param string $options_string
+	 * @access public
+	 * @return array
+	 */
 	public function compile($options_string)
 	{
 		$options = $this->optionsAsArray($options_string);
@@ -33,6 +45,14 @@ class Redirect {
 		return $headers;
 	}
 	
+	/**
+	 * Make destination from array of options
+	 * 
+	 * @param array $options
+	 * @throws Exception
+	 * @access public
+	 * @return string
+	 */
 	public function makeDestination($options)
 	{
 		if (!isset($options['host']))
@@ -45,6 +65,14 @@ class Redirect {
 		return $destination . '://' . $options['host'];
 	}
 	
+	/**
+	 * Turn options string (json, base64 encoded json or key value string) into 
+	 * an array
+	 * 
+	 * @param string $options_string
+	 * @access public
+	 * @return array
+	 */
 	public function optionsAsArray($options_string)
 	{
 		if (substr($options_string, -1) == '=') 
@@ -60,11 +88,25 @@ class Redirect {
 		return $this->renderKeyVal($options_string);
 	}
 	
+	/**
+	 * Render json string as array
+	 * 
+	 * @param string $string
+	 * @access public
+	 * @return array
+	 */
 	public function renderJson($string)
 	{
 		return json_decode($string, true);
 	}
 	
+	/**
+	 * Render string of key value pairs as an array
+	 * 
+	 * @param string $string
+	 * @access public
+	 * @return array
+	 */
 	public function renderKeyVal($string)
 	{
 		$opts = explode('-opts-', $string);
