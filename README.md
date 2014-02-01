@@ -4,6 +4,12 @@ Redirect a domain, with a CNAME (or any other record)
 
 Live at [cnamer.com](http://cnamer.com)
 
+# Set up
+
+Point website (eg: cnamer.com) to ```public/website```, point *.cnamer.com to
+```public/cnamer``` then configure cnamer domain and ip on line 10 of 
+```public/cnamer/redirect.php```
+
 # License
 
 Copyright (C) 2014 Samuel Ryan (citricsquid)
